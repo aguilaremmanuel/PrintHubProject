@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/main-page-style.css' %}" rel="stylesheet">
+    <title>PrintHub</title>
+</head>
+<body>
+    
+    <div class="main-container">
+        <a href="{% url 'shop_login' %}">Login as Shop</a>
+        <a href="{% url 'shop_signup' %}">Sign Up as Shop</a>
+        <a href="{% url 'user_login' %}">Login as User</a>
+        <a href="{% url 'user_signup' %}">Sign Up as User</a>
+    </div>
+    
+
+</body>
+</html>

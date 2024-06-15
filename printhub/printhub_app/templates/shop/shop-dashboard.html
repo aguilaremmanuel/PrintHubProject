@@ -1,0 +1,129 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/shop-dashboard-style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Shop Login</title>
+</head>
+<body>
+    
+    <div class="navigation">
+        <img src="{% static 'images/logo.png' %}" alt="Company Logo">
+
+        <div class="nav-container home-nav">
+            <i class="fa-solid fa-house"></i> <a href="#">Home</a>
+        </div>
+
+        <div class="nav-container">
+            <i class="fa-solid fa-flag"></i> <a href="#">Finished</a>
+        </div>
+
+        <div class="nav-container">
+            <i class="fa-solid fa-clock"></i> <a href="#">Scheduled</a>
+        </div>
+
+        <div class="nav-container cancel-nav">
+            <i class="fa-solid fa-ban"></i> <a href="#">Canceled</a>
+        </div>
+
+        <div class="nav-container">
+            <i class="fa-solid fa-tag"></i> <a href="#">Prices</a>
+        </div>
+
+        <div class="nav-container">
+            <i class="fa-solid fa-user-slash"></i> <a href="#">Restricted Users</a>
+        </div>
+
+        <div class="nav-container">
+            <i class="fa-solid fa-money-check"></i> <a href="#">Subscriptions</a>
+        </div>
+        
+        <div class="nav-container">
+            <i class="fa-solid fa-chart-pie"></i> <a href="#">Reports</a>
+        </div>
+
+    </div>
+
+    <div class="main-panel">
+
+        <div class="folder-container">
+            <h1>My Folders</h1>
+            <button class="create-folder-btn" onclick="showCreateFolderPanel()"><i class="fa-solid fa-plus"></i>Create Folder</button>
+            <li><a href="{#% url 'generate_folder_link' %}">Generate Folder Link</a></li>
+
+            <div class="create-folder-modal" id="create-folder-modal">
+                <div class="create-folder-panel">
+                    <label>New Folder</label>
+                    <form action="{% url 'shop_create_folder' %}" method="post">
+                        {% csrf_token %}
+                        <input type="text" name="name" id="id_name" value="Untitled Folder" class="form-control">
+                        
+                        <div class="create-folder-action">
+                            <div class="cancel-btn" id="cancel-btn"><p>Cancel</p></div>
+                            <button type="submit" class="crt-folder-btn">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            
+            <div class="list-folders">
+                {% for folder in folders %}
+                    <div class="folder">
+                        <i class="fa-solid fa-folder"></i> 
+                        <a href="{#% url 'folder_detail' folder.id_folder %}">{{ folder.name }}</a>
+                        <i class="fa-solid fa-ellipsis-vertical ellipsis-icon"></i>
+                        <div class="options-popup">
+                            <ul>
+                                <!-- <li><a href="{#% url 'generate_qr_code' folder.id_folder %}">Print QR Code</a></li> -->
+                                <li><a href="#">Rename</a></li>
+                                {% if folder.state == "hidden" %}
+                                    <li><a href="#">Sharing (Hidden) <i class="fa-solid fa-caret-down"></i></i></a></li>
+                                {% elif folder.state == "viewing" %}
+                                    <li><a href="#">Sharing (Viewing) <i class="fa-solid fa-caret-down"></i></i></a></li>
+                                {% elif folder.state == "sharing" %}
+                                    <li><a href="#">Sharing (Public) <i class="fa-solid fa-caret-down"></i></i></a></li>
+                                {% else %}
+                                    <li><a href="#">Sharing (Unknown) <i class="fa-solid fa-caret-down"></i></i></a></li> <!-- Optional: Handle other cases -->
+                                {% endif %}
+
+
+                                <div class="options-popup-sharing">
+                                    <ul>
+                                        <li class="folder-state" data-id="{{ folder.id_folder }}" data-state="sharing">Share link to public and allow uploads</li>
+                                        <li class="folder-state" data-id="{{ folder.id_folder }}" data-state="viewing">Share link to public but disable uploads</li>
+                                        <li class="folder-state" data-id="{{ folder.id_folder }}" data-state="hidden">Hide link to public</li>
+                                    </ul>
+                                </div>
+
+
+                                <li><a href="{#% url 'delete_folder' folder.id_folder %}">Remove</a></li>
+                            </ul>
+
+                            
+
+
+                        </div>
+                        
+                    </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+        
+    </div>
+
+
+    <form action="{% url 'shop_logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+
+    <script src="{% static 'js/shop-dashboard.js' %}"></script>
+
+</body>
+</html>

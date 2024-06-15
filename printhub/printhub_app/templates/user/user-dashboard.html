@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/user-dashboard-style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Welcome to PrintHub!</title>
+</head>
+<body>
+
+    <div class="main-container">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="header-container">
+            <h2>Welcome, User!</h2>
+            <div class="logout-container">
+                <form action="{% url 'user_logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">Logout <i class="fa-solid fa-right-from-bracket"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <div class="action-header">
+            <div class="search-bar-container">
+                <form method="get">  
+                    {% csrf_token %}
+                    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <input type="text" name="query" placeholder="Search shop...">  
+                </form> 
+            </div>
+
+            <div class="join-shop-btn" id="join-shop-btn">
+                Join Shop with Code
+            </div>
+        </div>
+
+        <h3 class="select-shop-txt">Select shop for printing:</h3>
+
+        <div class="shop-titles-container">
+            <span class="shop-name">Name</span> <span>Operating Hours</span> 
+        </div>
+
+
+        <!-- <div class="shop-main-container"> -->
+
+        {% for shop in folder_access_data %}
+            <div class="shop-panel">
+                <div class="store-description" data-folder-id="{{ shop.folder_id }}">
+                    {% if shop.shop_status == "open" %}
+                        <i class="fa-solid fa-store store-icon" style="color:rgb(69, 216, 82);"></i>
+                    {% elif shop.shop_status == "close" %}
+                        <i class="fa-solid fa-store-slash store-icon" style="color:rgb(152, 152, 152);"></i>
+                    {% endif %}
+                    <span class="store-name-txt">{{ shop.shop_name }}</span>
+                    <span class="operating-hours-txt">7:00 am - 7:00 pm</span>
+                </div>
+                <div class="shop-action-container">
+                    <i class="fa-solid fa-ellipsis-vertical" class="shop-action"></i>
+                </div>
+            </div>
+        {% endfor %}
+
+        <!-- </div> -->
+        
+        <div class="join-shop-modal" id="join-shop-modal">
+            <div class="join-shop-panel">
+                <label>Join a shop with code</label>
+                <form action="{% url 'user_join_shop' %}" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="shop_id" id="shop_id" placeholder="Enter shop code here" class="form-control">
+                    
+                    <div class="join-shop-action">
+                        <div class="cancel-btn" id="cancel-btn"><p>Cancel</p></div>
+                        <button type="submit" class="join-shop-submit">Join</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    
+        
+        
+        
+
+    </div>
+    
+    <script src="{% static 'js/user-dashboard.js' %}">
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var storeDescriptions = document.querySelectorAll('.store-description');
+
+            storeDescriptions.forEach(function(storeDescription) {
+                storeDescription.addEventListener('click', function() {
+                    var shop_id = this.getAttribute('data-folder-id');
+                    
+                    fetch('/user/dashboard/redirecting', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'  // Ensure this line is within a Django template to include the CSRF token
+                        },
+                        body: JSON.stringify({ shop_id: shop_id })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.redirect_url) {
+                            window.location.href = data.redirect_url;
+                        } else {
+                            console.error('Error:', data.message);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+
+                });
+            });
+        });
+
+        
+    </script>
+
+</body>
+</html>
