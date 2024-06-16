@@ -33,7 +33,7 @@ def shop_login(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             shop = ShopBackend.authenticate(request, email=email, password=password)
-            shop.last_login = timezone.now()
+            #shop.last_login = timezone.now()
             if shop is not None:
                 request.session['shop_id'] = shop.shop_id
                 shop.save()
@@ -205,7 +205,6 @@ def user_upload_file(request):
             user = User.objects.get(id=user_id)
         except User.DoesNotExist:
             messages.error(request, 'User not found.')
-
 
         try:
             folder = UserFolder.objects.get(user=user_id)

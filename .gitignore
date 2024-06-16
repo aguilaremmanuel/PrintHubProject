@@ -1,1 +1,5 @@
+# Ignore Python bytecode files
 *.pyc
+
+# Ignore settings.py
+settings.py
