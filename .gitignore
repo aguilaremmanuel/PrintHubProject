@@ -1,5 +1,18 @@
 # Ignore Python bytecode files
 *.pyc
+__pycache__/
 
 # Ignore settings.py
 settings.py
+
+# Ignore Django migrations
+*/migrations/*
+
+# Ignore static and media files
+staticfiles/
+media/
+
+# Ignore virtual environment directories
+venv/
+myenv/
+env/

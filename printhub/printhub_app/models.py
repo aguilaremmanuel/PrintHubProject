@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.hashers import make_password, check_password as check_password_hash
 import random
 
-
 class Shop(models.Model):
     shop_id = models.CharField(max_length=6, primary_key=True)
     shop_name = models.CharField(max_length=15)
@@ -72,4 +71,3 @@ class UserFolder(models.Model):
 
     class Meta:
         db_table = 'user_folder'
-

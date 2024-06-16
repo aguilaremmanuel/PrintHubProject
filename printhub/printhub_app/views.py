@@ -207,8 +207,8 @@ def user_upload_file(request):
             messages.error(request, 'User not found.')
 
         try:
-            folder = UserFolder.objects.get(user=user_id)
-        except User.DoesNotExist:
+            user_folder = UserFolder.objects.get(user=user)
+        except UserFolder.DoesNotExist:
             UserFolder.objects.create(folder_parent=shop_folder, user=user)
 
         if shop_folder:
