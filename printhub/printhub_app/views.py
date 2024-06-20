@@ -292,10 +292,20 @@ def user_upload_file(request):
         file_parent = user_folder.user_folder_no
 
         try:
-            
-        
+            user_files = UserFile.objects.filter(file_parent=file_parent)
+        except UserFile.DoesNotExist:
+            messages.error(request, 'User not found.')
+            user_files = []
 
-        return render(request, 'user/user-upload-files.html', {'user_folder_no':user_folder.user_folder_no})
+        user_filenames = [{'file_name': file.file.name} for file in user_files]
+
+        context = {
+            'user_folder_no': user_folder.user_folder_no,
+            'user_filenames': user_filenames
+        }
+
+        return render(request, 'user/user-upload-files.html', context)
+    
     elif int(shop_folder_count) > 1:
         return render(request, 'user/shop-multiple-folder.html', shop_info)
 

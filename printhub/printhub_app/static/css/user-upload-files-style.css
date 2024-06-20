@@ -68,7 +68,6 @@ input[type="file"]::file-selector-button {
     display: none;
 }
 
-
 input[type="file"]::before {
     content: 'Choose Files ';
     color: black;
