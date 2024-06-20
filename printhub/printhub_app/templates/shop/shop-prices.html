@@ -1,0 +1,204 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'css/generic-style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/shop-dashboard-style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/shop-price-style.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <title>Shop Prices</title>
+    </head>
+
+    <body>
+    
+        <div class="navigation">
+            <img src="{% static 'images/logo.png' %}" alt="Company Logo">
+    
+            <div class="nav-links-container">
+                <a href="{% url 'shop_dashboard' %}"><i class="fa-solid fa-house"></i> <span>Home</span></a>
+                <a href="{% url 'shop_prices' %}" class="current-link link-hovered"><i class="fa-solid fa-tag active-icon icon-hovered"></i><span class="price-text link-text-hovered">Prices</span></a>  
+                <a href="#"><i class="fa-solid fa-user-slash"></i><span>Restricted Users</span></a> 
+                <a href="#"><i class="fa-solid fa-money-check"></i><span>Subscriptions</span></a>
+                <a href="#"><i class="fa-solid fa-chart-pie"></i><span>Reports</span></a>
+            </div>
+    
+        </div>
+    
+        <div class="main-panel">
+
+            <div class="profile-container">
+                <span>Kween Leng Leng</span> <i class="fa-solid fa-circle-user"></i>
+            </div>
+
+            <div class="prices-container">
+                
+                <h1>MY PRINTING RATES</h1>
+
+                <table>
+                    <thead>
+                        <tr>
+                          <th></th>
+                          <th>SHORT</th>
+                          <th>A4</th>
+                          <th>LONG</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Colored (High)</td>
+
+                          <td>
+                            {% if paper_rates.short_colored_high != None %}
+                                <span>Php {{ paper_rates.short_colored_high }}</span>
+                            {% else %}
+                                <span class="no-value-txt">&lt;&lt; required value &gt;&gt;</span>
+                            {% endif %}
+                            <i class="fa-solid fa-pen-to-square edit-icon" data-id="short_colored_high"></i>
+                          </td>
+
+                          <td>
+                            {% if paper_rates.a4_colored_high != None %}
+                                <span>Php {{ paper_rates.a4_colored_high }}</span>
+                            {% else %}
+                                <span class="no-value-txt">&lt;&lt; required value &gt;&gt;</span>
+                            {% endif %}
+                            <i class="fa-solid fa-pen-to-square edit-icon" data-id="a4_colored_high"></i>
+                          </td>
+
+                          <td>
+                            {% if paper_rates.long_colored_high != None %}
+                                <span>Php {{ paper_rates.long_colored_high }}</span>
+                            {% else %}
+                                <span class="no-value-txt">&lt;&lt; required value &gt;&gt;</span>
+                            {% endif %}
+                            <i class="fa-solid fa-pen-to-square edit-icon" data-id="long_colored_high"></i>
+                          </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Colored (Medium)</td>
+  
+                            <td>
+                              {% if paper_rates.short_colored_medium != None %}
+                                  <span>Php {{ paper_rates.short_colored_medium }}</span>
+                              {% else %}
+                                  <span class="no-value-txt">&lt;&lt; required value &gt;&gt;</span>
+                              {% endif %}
+                              <i class="fa-solid fa-pen-to-square edit-icon" data-id="short_colored_medium"></i>
+                            </td>
+  
+                            <td>
+                              {% if paper_rates.a4_colored_medium != None %}
+                                  <span>Php {{ paper_rates.a4_colored_medium }}</span>
+                              {% else %}
+                                  <span class="no-value-txt">&lt;&lt; required value &gt;&gt;</span>
+                              {% endif %}
+                              <i class="fa-solid fa-pen-to-square edit-icon" data-id="a4_colored_medium"></i>
+                            </td>
+  
+                            <td>
+                              {% if paper_rates.long_colored_medium != None %}
+                                  <span>Php {{ paper_rates.long_colored_medium }}</span>
+                              {% else %}
+                                  <span class="no-value-txt">&lt;&lt; required value &gt;&gt;</span>
+                              {% endif %}
+                              <i class="fa-solid fa-pen-to-square edit-icon" data-id="long_colored_medium"></i>
+                            </td>
+  
+                          </tr>
+
+                          <tr>
+                            <td>Colored (Low)</td>
+  
+                            <td>
+                              {% if paper_rates.short_colored_low != None %}
+                                  <span>Php {{ paper_rates.short_colored_low }}</span>
+                              {% else %}
+                                  <span class="no-value-txt">&lt;&lt; required value &gt;&gt;</span>
+                              {% endif %}
+                              <i class="fa-solid fa-pen-to-square edit-icon" data-id="short_colored_low"></i>
+                            </td>
+  
+                            <td>
+                              {% if paper_rates.a4_colored_low != None %}
+                                  <span>Php {{ paper_rates.a4_colored_low }}</span>
+                              {% else %}
+                                  <span class="no-value-txt">&lt;&lt; required value &gt;&gt;</span>
+                              {% endif %}
+                              <i class="fa-solid fa-pen-to-square edit-icon" data-id="a4_colored_low"></i>
+                            </td>
+  
+                            <td>
+                              {% if paper_rates.long_colored_low != None %}
+                                  <span>Php {{ paper_rates.long_colored_low }}</span>
+                              {% else %}
+                                  <span class="no-value-txt">&lt;&lt; required value &gt;&gt;</span>
+                              {% endif %}
+                              <i class="fa-solid fa-pen-to-square edit-icon" data-id="long_colored_low"></i>
+                            </td>
+  
+                          </tr>
+
+                          <tr>
+                            <td>Black & White</td>
+  
+                            <td>
+                              {% if paper_rates.short_bw != None %}
+                                  <span>Php {{ paper_rates.short_bw }}</span>
+                              {% else %}
+                                  <span class="no-value-txt">&lt;&lt; required value &gt;&gt;</span>
+                              {% endif %}
+                              <i class="fa-solid fa-pen-to-square edit-icon" data-id="short_bw"></i>
+                            </td>
+  
+                            <td>
+                              {% if paper_rates.a4_bw != None %}
+                                  <span>Php {{ paper_rates.a4_bw }}</span>
+                              {% else %}
+                                  <span class="no-value-txt">&lt;&lt; required value &gt;&gt;</span>
+                              {% endif %}
+                              <i class="fa-solid fa-pen-to-square edit-icon" data-id="a4_bw"></i>
+                            </td>
+  
+                            <td>
+                              {% if paper_rates.long_bw != None %}
+                                  <span>Php {{ paper_rates.long_bw }}</span>
+                              {% else %}
+                                  <span class="no-value-txt">&lt;&lt; required value &gt;&gt;</span>
+                              {% endif %}
+                              <i class="fa-solid fa-pen-to-square edit-icon" data-id="long_bw"></i>
+                            </td>
+                          </tr>
+                      </tbody>
+                </table>
+
+                <div class="edit-price-modal">  
+                    <div class="edit-price-panel">
+                        <form action="{% url 'shop_edit_price' %}" method="post">
+                            {% csrf_token %}
+                            <h2 id="edit-price-header">COLORED (HIGH) - LONG</h2>
+                            <div class="input-price-container">
+                                <input type="number" class="number-input" name="new_price" step="0.01" min="0" placeholder="Set price here..." required>
+                            </div>
+                            <input type="hidden" name="paper_type" id="paperTypeHidden">
+                            <div class="action-container">
+                                <span id="cancel-edit-price" class="cancel-btn">Cancel</span>
+                                <input type="submit" value="Update" class="update-btn">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    
+    
+        <script src="{% static 'js/shop-prices.js' %}"></script>
+    
+    </body>
+
+</html>

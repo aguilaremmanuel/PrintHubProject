@@ -8,6 +8,8 @@ urlpatterns = [
     path("shops/logout/", views.shop_logout, name='shop_logout'),           # shop logout
     path('shop/dashboard/', views.shop_dashboard, name='shop_dashboard'),   # shop dashboard page
     path('shop/dashboard/create-folder/', views.shop_create_folder, name="shop_create_folder"),
+    path('shop/dashboard/prices/', views.shop_prices, name="shop_prices"),
+    path('shop/dashboard/editing-price', views.shop_edit_price, name="shop_edit_price"),
     
     path('user/signup/', views.user_signup, name='user_signup'),            # user signup page
     path('user/login/', views.user_login, name='user_login'),               # user login page
@@ -16,5 +18,6 @@ urlpatterns = [
     path('user/dashboard/join-a-shop', views.user_join_shop, name="user_join_shop"),
     path('user/dashboard/redirecting', views.user_redirect_when_shop_clicked, name="user_redirect_when_shop_clicked"),
     path('user/dashboard/upload', views.user_upload_file, name="user_upload_file"),
+    path('user/dashboard/upload-files', views.user_upload_files, name="user_upload_files"),
     
 ]

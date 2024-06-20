@@ -1,23 +1,9 @@
-* {
-    box-sizing: border-box;
-}
 body {
-    padding: 0;
-    margin: 0;
     display: flex;
-}
-
-.container {
-    background-color: rgb(239, 239, 240);
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
 }
 
 .navigation {
-    background-color: rgb(239, 239, 240);
+    background-color: #DBE0FA;
     width: 18%;
     height: 100vh;
 }
@@ -30,175 +16,55 @@ body {
 }
 
 .main-panel {
-    display: flex;
-    justify-content: flex;
-    align-items: center;
     background-color: rgb(239, 239, 240);
     width: 82%;
     height: 100vh;
+    padding: 0 40px;
 }
 
-.folder-container {
-    background-color: white;
-    border-radius: 30px;
-    padding: 20px;
-    display: block;
-    width: 95%;
-    height: 80%;
-}
-
-.nav-container {
-    padding: 5px 40px;
-    margin-bottom: 10px;
-}
-
-.nav-container i {
-    margin-right: 10px;
-}
-
-.nav-container a {
-    text-decoration: none;
-    color: black;
-}
-
-.home-nav, .cancel-nav {
-    margin-bottom: 30px;
-}
-
-.create-folder-btn {
-    height: 40px;
-    width: 150px;
-    background-color: transparent;
-    border: 2px solid rgb(42, 67, 165);
-    cursor: pointer;
-    margin-bottom: 50px;
-    border-radius: 8px;
-    font-weight: bold;
-    color: rgb(42, 67, 165);
-}
-
-.create-folder-btn i {
-    margin-right: 5px;
-    color: rgb(42, 67, 165);
-}
-
-.create-folder-modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.create-folder-panel {
-    display: block;
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 350px;
-    height: 200px;
-    border-radius: 13px;
-}
-
-.create-folder-panel label {
-    display: block;
-    font-size: 23px;
-    margin-bottom: 2px;
-    padding: 14px 0;
-}
-
-.create-folder-panel input {
-    display: block;
-    width: 100%;
-    height: 40px;
-    margin-bottom: 20px;
-    border: 2px solid blue;
-    border-radius: 4px;
-    padding-left: 20px;
-}
-
-.create-folder-action {
+.profile-container {
     display: flex;
     justify-content: right;
     align-items: center;
+    padding: 20px 5px;
 }
 
-.cancel-btn p {
-    margin-right: 20px;
-    font-size: 17px;
-}
-
-.crt-folder-btn {
-    background-color: transparent;
-    border: none;
-    font-size: 15px;
-}
-
-.list-folders {
-    display: flex;
-    flex-wrap: wrap;
-    height: 370px;
-    overflow-y: auto;
+.profile-container i {
+    font-size: 35px;
+    color: #0B6DFF;
+    margin-left: 10px;
     cursor: pointer;
 }
 
-.folder {
-    display: flex;
-    padding: 0 23px;
-    padding-right: 5px;
-    position: relative;
-    justify-content: space-between;
-    align-items: center;
-    width: 240px;
-    height: 50px;
-    background-color: rgb(220, 223, 222);
-    border-radius: 5px;
-    margin-right: 35px;
-    margin-bottom: 30px;
+.folder-container, .prices-container {
+    background-color: white;
+    border-radius: 25px;
+    padding: 20px 40px;
+    display: block;
+    width: 100%;
+    height: 80%;
 }
 
-.folder a {
-    display: inline-block;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.nav-links-container a{
+    display: block;
+    text-align: left;
+    padding: 17px 0;
+    padding-left: 50px;
     text-decoration: none;
     color: black;
-    font-size: 16.4px;
-    width: 130px;
-    padding: 0 10px;
 }
 
-.options-popup {
-    display: none;
-    position: absolute;
-    top: 0;
-    right: -410px; /* Adjust this value as needed */
+.nav-links-container a i {
+    margin-right: 14px;
+}
+
+.link-hovered {
     background-color: white;
-    border: 1px solid #ccc;
-    padding: 10px;
-    z-index: 1;
-    width: 400px;
+    font-weight: bold;
+    color: #0B6DFF;
+    border-right: 5px solid #0B6DFF;
 }
 
-.options-popup.show {
-    display: block;
-}
-
-.options-popup a {
-    width: 100%;
-}
-
-.ellipsis-icon {
-    width: 25px;
-    text-align: center;
-    padding: 4px 0;
-    border-radius: 50%;
+.icon-hovered, .link-text-hovered {
+    color: #0B6DFF;
 }

@@ -48,4 +48,20 @@ class UserLoginForm(forms.Form):
     email = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
 
+"""class UserUploadForm(forms.ModelForm):
+    class Meta:
+        model = UserFile
+        fields = ['file', 'file_parent', 'price']
+        widgets = {
+            'file': forms.ClearableFileInput(attrs={'multiple': True}),
+        }
 
+    def clean(self):
+        cleaned_data = super().clean()
+        files = self.files.getlist('file')
+        if not files:
+            raise forms.ValidationError("You must upload at least one file.")
+        for file in files:
+            if not file.name.endswith(('.pdf', '.doc', '.docx')):
+                raise forms.ValidationError("Only PDF and DOC/DOCX files are allowed.")
+        return cleaned_data"""

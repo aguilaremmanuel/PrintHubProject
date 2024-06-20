@@ -5,7 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/generic-style.css' %}" rel="stylesheet">
     <link href="{% static 'css/shop-dashboard-style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/shop-home-style.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Shop Login</title>
 </head>
@@ -14,47 +16,28 @@
     <div class="navigation">
         <img src="{% static 'images/logo.png' %}" alt="Company Logo">
 
-        <div class="nav-container home-nav">
-            <i class="fa-solid fa-house"></i> <a href="#">Home</a>
-        </div>
-
-        <div class="nav-container">
-            <i class="fa-solid fa-flag"></i> <a href="#">Finished</a>
-        </div>
-
-        <div class="nav-container">
-            <i class="fa-solid fa-clock"></i> <a href="#">Scheduled</a>
-        </div>
-
-        <div class="nav-container cancel-nav">
-            <i class="fa-solid fa-ban"></i> <a href="#">Canceled</a>
-        </div>
-
-        <div class="nav-container">
-            <i class="fa-solid fa-tag"></i> <a href="#">Prices</a>
-        </div>
-
-        <div class="nav-container">
-            <i class="fa-solid fa-user-slash"></i> <a href="#">Restricted Users</a>
-        </div>
-
-        <div class="nav-container">
-            <i class="fa-solid fa-money-check"></i> <a href="#">Subscriptions</a>
-        </div>
-        
-        <div class="nav-container">
-            <i class="fa-solid fa-chart-pie"></i> <a href="#">Reports</a>
+        <div class="nav-links-container">
+            <a href="#" class="home-link link-hovered"><i class="fa-solid fa-house first-icon icon-hovered"></i> <span class="home-text link-text-hovered">Home</span></a>
+            <a href="{% url 'shop_prices' %}"><i class="fa-solid fa-tag"></i><span>Prices</span></a>  
+            <a href="#"><i class="fa-solid fa-user-slash"></i><span>Restricted Users</span></a> 
+            <a href="#"><i class="fa-solid fa-money-check"></i><span>Subscriptions</span></a>
+            <a href="#"><i class="fa-solid fa-chart-pie"></i><span>Reports</span></a>
         </div>
 
     </div>
 
     <div class="main-panel">
 
-        <div class="folder-container">
-            <h1>My Folders</h1>
-            <button class="create-folder-btn" onclick="showCreateFolderPanel()"><i class="fa-solid fa-plus"></i>Create Folder</button>
-            <li><a href="{#% url 'generate_folder_link' %}">Generate Folder Link</a></li>
+        <div class="profile-container">
+            <span>Kween Leng Leng</span> <i class="fa-solid fa-circle-user"></i>
+        </div>
 
+        <div class="folder-container">
+
+            <div class="folder-header-container">
+                <h1 class="folder-header">MY FOLDERS</h1> <i id="addFolderIcon" class="fa-solid fa-folder-plus"></i>
+            </div>
+            
             <div class="create-folder-modal" id="create-folder-modal">
                 <div class="create-folder-panel">
                     <label>New Folder</label>
@@ -69,59 +52,95 @@
                     </form>
                 </div>
             </div>
+
+
+            <div class="folder-titles">
+                <div class="name-container"><i class="fa-solid fa-folder"></i><span class="folder-txt-title">Name</span></div>
+                <div class="payment-container"><i class="fa-solid fa-credit-card icon-title-payment"></i><span class="folder-txt-title">For Payment</span></div>
+                <div class="printing-container"><i class="fa-solid fa-print icon-title-printing"></i><span class="folder-txt-title">For Printing</span></div>
+                <div class="claiming-container"><i class="fa-solid fa-circle-check icon-title-claiming"></i><span class="folder-txt-title">For Claiming</span></div>
+                <div class="action-container"><i class="fa-solid fa-ellipsis-vertical folder-txt-title"></i></div>
+            </div>
+
+            {% for folder in folders %}
+                <div class="folder-titles folder-container-instance">
+                    <div class="name-container"><i class="fa-solid fa-folder"></i><span>{{ folder.name }}</span></div>
+                    <div class="payment-container"><i class="fa-solid fa-users"></i><span>0</span></div>
+                    <div class="printing-container"><i class="fa-solid fa-users"></i><span>0</span></div>
+                    <div class="claiming-container"><i class="fa-solid fa-users"></i><span>0</span></div>
+                    <div class="action-container ellipsis" ><i class="fa-solid fa-ellipsis-vertical"></i>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% if raiseNoShopRate == True %}
+
+                <div class="no-shop-rate-modal" id="no-shop-rate-modal">
+                    <div class="no-shop-rate-panel">
+                        <div class="cross-icon-container"><i class="fa-solid fa-circle-exclamation"></i></div>
+                        <p class="message">Oops! You need to set up your printing rates first before creating a folder.</p>
+                        <div class="no-shop-rate-action">
+                            <div class="cancel-btn" id="cancel-setup-rates-btn"><p>Cancel</p></div>
+                            <a href="{% url 'shop_prices' %}">Set Price Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    document.getElementById("cancel-setup-rates-btn").addEventListener("click", function() {
+                        document.getElementById("no-shop-rate-modal").style.display = "none";
+                    });
+                </script>
+
+            {% endif %}
             
-            
-            <div class="list-folders">
-                {% for folder in folders %}
+      
+            <!-- <div class="list-folders">
+                {#% for folder in folders %}
                     <div class="folder">
                         <i class="fa-solid fa-folder"></i> 
-                        <a href="{#% url 'folder_detail' folder.id_folder %}">{{ folder.name }}</a>
+                        <a href="{#% url 'folder_detail' folder.id_folder %}"></a>
                         <i class="fa-solid fa-ellipsis-vertical ellipsis-icon"></i>
                         <div class="options-popup">
-                            <ul>
+                            <ul> -->
                                 <!-- <li><a href="{#% url 'generate_qr_code' folder.id_folder %}">Print QR Code</a></li> -->
+                                <!--
                                 <li><a href="#">Rename</a></li>
-                                {% if folder.state == "hidden" %}
+                                {#% if folder.state == "hidden" %}
                                     <li><a href="#">Sharing (Hidden) <i class="fa-solid fa-caret-down"></i></i></a></li>
-                                {% elif folder.state == "viewing" %}
+                                {#% elif folder.state == "viewing" %}
                                     <li><a href="#">Sharing (Viewing) <i class="fa-solid fa-caret-down"></i></i></a></li>
-                                {% elif folder.state == "sharing" %}
+                                {#% elif folder.state == "sharing" %}
                                     <li><a href="#">Sharing (Public) <i class="fa-solid fa-caret-down"></i></i></a></li>
-                                {% else %}
-                                    <li><a href="#">Sharing (Unknown) <i class="fa-solid fa-caret-down"></i></i></a></li> <!-- Optional: Handle other cases -->
-                                {% endif %}
-
-
+                                {#% else %}
+                                    <li><a href="#">Sharing (Unknown) <i class="fa-solid fa-caret-down"></i></i></a></li>Optional: Handle other cases 
+                                {#% endif %}
                                 <div class="options-popup-sharing">
                                     <ul>
-                                        <li class="folder-state" data-id="{{ folder.id_folder }}" data-state="sharing">Share link to public and allow uploads</li>
-                                        <li class="folder-state" data-id="{{ folder.id_folder }}" data-state="viewing">Share link to public but disable uploads</li>
-                                        <li class="folder-state" data-id="{{ folder.id_folder }}" data-state="hidden">Hide link to public</li>
+                                        <li class="folder-state" data-id="" data-state="sharing">Share link to public and allow uploads</li>
+                                        <li class="folder-state" data-id="" data-state="viewing">Share link to public but disable uploads</li>
+                                        <li class="folder-state" data-id="" data-state="hidden">Hide link to public</li>
                                     </ul>
                                 </div>
-
-
                                 <li><a href="{#% url 'delete_folder' folder.id_folder %}">Remove</a></li>
                             </ul>
-
-                            
-
-
                         </div>
-                        
                     </div>
-                {% endfor %}
+                {#% endfor %}
             </div>
+                -->
             
         </div>
         
     </div>
 
-
-    <form action="{% url 'shop_logout' %}" method="post">
+    
+        <form action="{% url 'shop_logout' %}" method="post">
         {% csrf_token %}
         <button type="submit">Logout</button>
-    </form>
+        </form>
+    
+    
 
     <script src="{% static 'js/shop-dashboard.js' %}"></script>
 

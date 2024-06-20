@@ -1,0 +1,276 @@
+.cancel-nav {
+    margin-bottom: 30px;
+}
+
+.folder-header-container {
+    display: flex;
+    justify-self: left;
+    align-items: center;
+}
+
+.folder-header {
+    opacity: 70%;
+    margin-right: 20px;
+}
+
+.folder-header-container i {
+    font-size: 31px;
+    color: #0B6DFF;
+    cursor: pointer;
+}
+
+.folder-header-container i:hover {
+    color: #074cb4;
+}
+
+.folder-titles {
+    display: flex;
+    position: relative;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgb(230, 227, 227);
+}
+
+.folder-titles .folder-txt-title {
+    opacity: 55%;
+}
+
+.folder-titles i {
+    margin-right: 10px;
+}
+
+.folder-titles .name-container {
+    width: 340px;
+}
+
+.folder-titles .payment-container {
+    width: 220px;
+}
+
+.folder-titles .printing-container {
+    width: 220px;
+}
+
+.folder-titles .claiming-container {
+    width: 220px;
+}
+
+.folder-titles .action-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    height: 50px;
+    width: 50px;
+    top: 0;
+    right: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.folder-titles .action-container i {
+    margin: 0;
+}
+
+.name-container i {
+    color: #0B6DFF;
+}
+
+.payment-container  .icon-title-payment {
+    color: gold;
+}
+
+.printing-container .icon-title-printing {
+    color: red;
+}
+
+.claiming-container .icon-title-claiming {
+    color: rgb(20, 233, 20);
+}
+
+.folder-container {
+    cursor: pointer;
+}
+
+.folder-container-instance:hover {
+    background-color: #DBE0FA;
+}
+
+.folder-container-instance .ellipsis:hover {
+    background-color: #f0eded;
+}
+
+.create-folder-modal, .no-shop-rate-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.no-shop-rate-modal {
+    display: block;
+}
+
+.create-folder-panel, .no-shop-rate-panel {
+    display: block;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 350px;
+    height: 200px;
+    border-radius: 13px;
+}
+
+.no-shop-rate-panel {
+    height: 220px;
+}
+
+.create-folder-panel label {
+    display: block;
+    font-size: 23px;
+    margin-bottom: 2px;
+    padding: 14px 0;
+}
+
+.create-folder-panel input {
+    display: block;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 20px;
+    border: 2px solid blue;
+    border-radius: 4px;
+    padding-left: 20px;
+}
+
+.create-folder-action, .no-shop-rate-action {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.cancel-btn {
+    padding: 10px 18px;
+    border-radius: 5px;
+    margin-right: 2px;
+    cursor: pointer;
+}
+
+.cancel-btn:hover {
+    background-color: #c0bdbd;
+}
+
+.cancel-btn p {
+    padding: 0;
+    font-size: 17px;
+    margin: 0;
+}
+
+.crt-folder-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 15px;
+}
+
+.cross-icon-container {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.cross-icon-container i {
+    font-size: 40px;
+    color: red;
+}
+
+.no-shop-rate-panel .message {
+    text-align: center;
+    font-size: 17px;
+}
+
+.no-shop-rate-action {
+    margin-top: 30px;
+}
+
+.no-shop-rate-action a{
+    background-color: blue;
+    color: white;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 5px;
+}
+
+.no-shop-rate-action a:hover {
+    background-color: rgb(2, 2, 171);
+}
+
+.list-folders {
+    display: flex;
+    flex-wrap: wrap;
+    height: 370px;
+    overflow-y: auto;
+    cursor: pointer;
+}
+
+.folder {
+    display: flex;
+    padding: 0 23px;
+    padding-right: 5px;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    width: 240px;
+    height: 50px;
+    background-color: rgb(220, 223, 222);
+    border-radius: 5px;
+    margin-right: 35px;
+    margin-bottom: 30px;
+}
+
+.folder a {
+    display: inline-block;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    color: black;
+    font-size: 16.4px;
+    width: 130px;
+    padding: 0 10px;
+}
+
+.options-popup {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: -410px; /* Adjust this value as needed */
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1;
+    width: 400px;
+}
+
+.options-popup.show {
+    display: block;
+}
+
+.options-popup a {
+    width: 100%;
+}
+
+.ellipsis-icon {
+    width: 25px;
+    text-align: center;
+    padding: 4px 0;
+    border-radius: 50%;
+}

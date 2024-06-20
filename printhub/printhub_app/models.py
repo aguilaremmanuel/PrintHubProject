@@ -30,6 +30,14 @@ class Shop(models.Model):
         
         super().save(*args, **kwargs)
 
+    @property
+    def has_shop_rate(self):
+        return self.shoprate_set.exists()
+
+    @property
+    def shop_rate_set(self):
+        return self.shoprate_set
+
     class Meta:
         db_table = 'shop_account'
 
@@ -71,3 +79,33 @@ class UserFolder(models.Model):
 
     class Meta:
         db_table = 'user_folder'
+
+class UserFile(models.Model):
+    user_file_no = models.BigAutoField(primary_key=True)
+    file = models.FileField(upload_to='uploads/')
+    file_parent = models.ForeignKey(UserFolder, on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+
+    class Meta:
+        db_table = 'user_file'
+
+class ShopRate(models.Model):
+    
+    shop_rate_no = models.BigAutoField(primary_key=True)
+    shop_id = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    long_colored_low = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    short_colored_low = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    a4_colored_low = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    long_colored_medium = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    short_colored_medium = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    a4_colored_medium = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    long_colored_high = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    short_colored_high = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    a4_colored_high = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    long_bw = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    short_bw = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    a4_bw= models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+
+    class Meta:
+        db_table = 'shop_rate'
+

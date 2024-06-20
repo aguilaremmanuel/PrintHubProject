@@ -16,12 +16,13 @@ def main_page (request):
 def shop_dashboard(request):
     shop_id = request.session.get('shop_id')
     if shop_id:
-
         folders = ShopFolder.objects.filter(folder_id=shop_id) 
-
+        hasNoShopRate = request.session.get('raise_no_shop_rate')
+        if hasNoShopRate:
+            del request.session['raise_no_shop_rate']
+            return render(request, 'shop/shop-dashboard.html', {'folders': folders, 'raiseNoShopRate': True})
         return render(request, 'shop/shop-dashboard.html', {'folders': folders})
-    else:
-        return redirect('shop_login')  
+    return redirect('shop_login')  
 
 def shop_login(request):
     shop_id = request.session.get('shop_id')
@@ -52,6 +53,7 @@ def shop_signup(request):
             shop.set_password(form.cleaned_data['password'])
             shop.date_registered = timezone.now()
             shop.save()
+            ShopRate.objects.create(shop_id=shop)
             return redirect('shop_login')  # Redirect to shop login page after successful signup
     else:
         form = ShopSignupForm()
@@ -59,23 +61,100 @@ def shop_signup(request):
 
 def shop_create_folder(request):
     shop_id = request.session.get('shop_id')
+
     if request.method == 'POST':
         folder_name = request.POST.get('name')
-        
         try:
             shop = Shop.objects.get(shop_id=shop_id)
         except Shop.DoesNotExist:
             messages.error(request, 'Shop not found.')
             return redirect('shop_dashboard')
-        ShopFolder.objects.create(name=folder_name, folder_id=shop)
+        
+            
+        
+        if shop.has_shop_rate:
+
+            shop_rate = shop.shop_rate_set.first()
+
+            null_attributes = {
+            'long_colored_low': shop_rate.long_colored_low is None,
+            'short_colored_low': shop_rate.short_colored_low is None,
+            'a4_colored_low': shop_rate.a4_colored_low is None,
+            'long_colored_medium': shop_rate.long_colored_medium is None,
+            'short_colored_medium': shop_rate.short_colored_medium is None,
+            'a4_colored_medium': shop_rate.a4_colored_medium is None,
+            'long_colored_high': shop_rate.long_colored_high is None,
+            'short_colored_high': shop_rate.short_colored_high is None,
+            'a4_colored_high': shop_rate.a4_colored_high is None,
+            'long_bw': shop_rate.long_bw is None,
+            'short_bw': shop_rate.short_bw is None,
+            'a4_bw': shop_rate.a4_bw is None,
+            }
+
+            # Check if any attribute is null
+            has_nulls = any(null_attributes.values())
+            print(null_attributes)
+
+            if has_nulls:
+                request.session['raise_no_shop_rate'] = True
+                return redirect('shop_dashboard')
+            else:
+                ShopFolder.objects.create(name=folder_name, folder_id=shop)
+        else:
+            request.session['raise_no_shop_rate'] = True
+            return redirect('shop_dashboard')
 
     return redirect('shop_dashboard')
+
+def shop_prices(request):
+    shop_id = request.session.get('shop_id')
+    try:
+        shop = Shop.objects.get(shop_id=shop_id)
+    except Shop.DoesNotExist:
+        messages.error(request, 'Shop not found.')
+
+    shop_rate = shop.shop_rate_set.first()
+
+    paper_rates = {
+            'short_colored_high': shop_rate.short_colored_high,
+            'a4_colored_high': shop_rate.a4_colored_high,
+            'long_colored_high': shop_rate.long_colored_high,
+
+            'short_colored_medium': shop_rate.short_colored_medium,
+            'a4_colored_medium': shop_rate.a4_colored_medium,
+            'long_colored_medium': shop_rate.long_colored_medium,
+
+            'short_colored_low': shop_rate.short_colored_low,
+            'a4_colored_low': shop_rate.a4_colored_low,
+            'long_colored_low': shop_rate.long_colored_low,
+
+            'short_bw': shop_rate.short_bw,
+            'a4_bw': shop_rate.a4_bw,
+            'long_bw': shop_rate.long_bw,
+    }
+
+    return render(request, 'shop/shop-prices.html', {'paper_rates': paper_rates})
+
+def shop_edit_price(request):
+    shop_id = request.session.get('shop_id')
+
+    if request.method == 'POST':
+        new_price = request.POST.get('new_price')
+        paper_type = request.POST.get('paper_type')
+
+        shop = Shop.objects.get(shop_id=shop_id)
+        shop_rate = ShopRate.objects.get(shop_id=shop)
+
+        setattr(shop_rate, paper_type, new_price)
+        shop_rate.save()
+
+        return redirect('shop_prices')
+
 
 def shop_logout(request):
     if 'shop_id' in request.session:
         del request.session['shop_id']
     return redirect('shop_login')
-
 
 def user_dashboard(request):
     username = request.session.get('username')
@@ -136,7 +215,6 @@ def user_logout(request):
         del request.session['username']
         del request.session['id']
     return redirect('user_login')
-
 
 def user_join_shop(request):
     if request.method == "POST":
@@ -211,13 +289,36 @@ def user_upload_file(request):
         except UserFolder.DoesNotExist:
             UserFolder.objects.create(folder_parent=shop_folder, user=user)
 
-        if shop_folder:
-            folder_no = shop_folder.folder_no
-        else:
-            folder_no = None
+        file_parent = user_folder.user_folder_no
 
-        return render(request, 'user/user-upload-files.html')
+        try:
+            
+        
+
+        return render(request, 'user/user-upload-files.html', {'user_folder_no':user_folder.user_folder_no})
     elif int(shop_folder_count) > 1:
         return render(request, 'user/shop-multiple-folder.html', shop_info)
 
     return redirect('user_dashboard')
+
+def user_upload_files(request):
+
+    if request.method == 'POST':
+
+        user_folder_no = request.POST.get('user_folder_no')
+
+        try:
+            file_parent = UserFolder.objects.get(user_folder_no=user_folder_no)
+        except UserFolder.DoesNotExist:
+            pass
+            
+        requested_files = request.FILES.getlist('files')
+
+        for file in requested_files:
+            new_file = UserFile(file=file, file_parent=file_parent)
+            new_file.save()
+
+            # Optionally, you may want to redirect to a different view after successful upload
+        return render(request, 'user/user-upload-files.html', {'user_folder_no':user_folder_no})
+
+
