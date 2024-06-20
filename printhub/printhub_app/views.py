@@ -9,6 +9,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json
 from django.urls import reverse
+import os
+from django.core.files.storage import default_storage
+import fitz
 
 def main_page (request):
     return render(request, 'main-page.html')
@@ -17,6 +20,7 @@ def shop_dashboard(request):
     shop_id = request.session.get('shop_id')
     if shop_id:
         folders = ShopFolder.objects.filter(folder_id=shop_id) 
+        
         hasNoShopRate = request.session.get('raise_no_shop_rate')
         if hasNoShopRate:
             del request.session['raise_no_shop_rate']
@@ -331,4 +335,17 @@ def user_upload_files(request):
             # Optionally, you may want to redirect to a different view after successful upload
         return render(request, 'user/user-upload-files.html', {'user_folder_no':user_folder_no})
 
+def user_test_upload(request):
+    return render (request, "user/test-upload.html")
 
+def t_upload_files(request):
+    if request.method == 'POST':
+
+        g_file = request.FILES.getlist('user_file')
+        for file in g_file:
+            new_file = TestFile(file=file)
+            new_file.save()
+            
+            file_path = os.path.join(default_storage.location, 'test_uploads', new_file.name)
+
+    return redirect('user_test_upload')

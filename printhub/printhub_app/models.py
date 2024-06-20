@@ -109,3 +109,9 @@ class ShopRate(models.Model):
     class Meta:
         db_table = 'shop_rate'
 
+class TestFile(models.Model):
+    test_file_no = models.BigAutoField(primary_key=True)
+    file = models.FileField(upload_to='test_uploads/')
+
+    class Meta:
+        db_table = 'test_file'

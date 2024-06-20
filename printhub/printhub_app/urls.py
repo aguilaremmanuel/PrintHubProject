@@ -19,5 +19,6 @@ urlpatterns = [
     path('user/dashboard/redirecting', views.user_redirect_when_shop_clicked, name="user_redirect_when_shop_clicked"),
     path('user/dashboard/upload', views.user_upload_file, name="user_upload_file"),
     path('user/dashboard/upload-files', views.user_upload_files, name="user_upload_files"),
-    
+    path('user/dashboard/test-upload', views.user_test_upload, name="user_test_upload"),
+    path('user/dashboard/uploadinggg', views.t_upload_files, name="t_upload_files"),
 ]

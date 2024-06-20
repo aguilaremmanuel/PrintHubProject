@@ -48,6 +48,9 @@ class UserLoginForm(forms.Form):
     email = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
 
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
+
 """class UserUploadForm(forms.ModelForm):
     class Meta:
         model = UserFile
