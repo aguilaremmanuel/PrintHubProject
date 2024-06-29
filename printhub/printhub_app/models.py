@@ -1,7 +1,54 @@
 from django.db import models
 from django.contrib.auth.hashers import make_password, check_password as check_password_hash
 import random
+import os
+from django.utils.deconstruct import deconstructible
+from django.conf import settings
 
+@deconstructible
+class UploadToUserFolder(object):
+    def __call__(self, instance, filename):
+        folder_name = f'{instance.file_parent.folder_parent.folder_id.shop_id}/{instance.file_parent.folder_parent.folder_no}/{instance.file_parent.user_folder_no}'
+        
+        temp = filename.replace(' ', '_')
+        filename = temp
+
+        # Ensure the directory exists
+        full_path = os.path.join(settings.MEDIA_ROOT, folder_name)
+        if not os.path.exists(full_path):
+            os.makedirs(full_path)
+
+        # Extract base name and extension without altering spaces
+        base_name, extension = os.path.splitext(filename)
+        #base_name = os.path.basename(base_name)  # Get just the filename part
+        # Check for existing files with the same base name
+        
+        existing_files = [f for f in os.listdir(full_path) if os.path.isfile(os.path.join(full_path, f))]
+
+        # Determine the new filename
+
+        if filename in existing_files:
+            count = 1
+            filename = f"{base_name}{count}{extension}"
+
+            print(filename)
+            while filename in existing_files:
+                count += 1
+                filename = f"{base_name}{count}{extension}"
+        else:
+            # Check for existing files with similar names
+            similar_names = [f for f in existing_files if f.startswith(base_name)]
+
+            # If there are similar names with the same extension
+            if any(name.endswith(extension) for name in similar_names):
+                count = 1
+                filename = f"{base_name}{count}{extension}"
+                while filename in existing_files:
+                    count += 1
+                    filename = f"{base_name}{count}{extension}"
+
+        return folder_name + '/'+ filename
+        
 class Shop(models.Model):
     shop_id = models.CharField(max_length=6, primary_key=True)
     shop_name = models.CharField(max_length=15)
@@ -82,8 +129,12 @@ class UserFolder(models.Model):
 
 class UserFile(models.Model):
     user_file_no = models.BigAutoField(primary_key=True)
-    file = models.FileField(upload_to='uploads/')
+    file = models.FileField(upload_to=UploadToUserFolder())
     file_parent = models.ForeignKey(UserFolder, on_delete=models.CASCADE)
+    paper_color = models.CharField(max_length=10, null=True)
+    page_number = models.CharField(max_length=10, null=True)
+    custom_page_size = models.CharField(max_length=10, null=True)
+    file_type = models.CharField(max_length=10, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
     class Meta:
@@ -108,10 +159,3 @@ class ShopRate(models.Model):
 
     class Meta:
         db_table = 'shop_rate'
-
-class TestFile(models.Model):
-    test_file_no = models.BigAutoField(primary_key=True)
-    file = models.FileField(upload_to='test_uploads/')
-
-    class Meta:
-        db_table = 'test_file'

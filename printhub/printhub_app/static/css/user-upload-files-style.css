@@ -1,21 +1,551 @@
-body {
-    background-color: lightblue;
+.main-container {
+    display: block;
+}
+
+.navigation {
+    width: 100%;
+    height: 65px;
+    background-color: #0B6DFF;
+}
+
+.navigation .menu-icon-container {
+    display: flex;
+    align-items: center;
+    width: 100px;
+    height: 100%;
+    margin-left: 30px;
+}
+
+.navigation i {
+    font-size: 27px;
+    color: white;
+    cursor: pointer;
+}
+
+.center-container {
     display: flex;
     width: 100vw;
-    height: 100vh;
     justify-content: center;
     align-items: center;
 }
 
-.main-container {
-    display: block;
-    width: 900px;
-    height: 90vh;
-    background-color: rgb(253, 254, 253);
-    border: 1px solid #eeeeee;
-    border-radius: 25px;
+.tracking-container {
+    display: flex;
+    position: relative;
+    padding: 20px 70px;
+    padding-bottom: 10px;
+    justify-content: space-between;
+    align-items: center;
+    width: 600px;
+    min-width: 300px;
 }
 
+.tracking-container .state {
+    display: flex;
+    background-color: #DBE0FA;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
+
+.tracking-container .current-state {
+    background-color: #0B6DFF;
+    justify-content: center;
+    align-items: center;
+}
+
+.tracking-container .line-tracker {
+    left: 0;
+    padding: 0 70px;
+    position: absolute;
+    width:100%;
+    max-width: 100%;
+    height: 18px;
+    z-index: -1;
+}
+
+.line-tracker .line {
+    height: 100%;
+    width:100%;
+    background-color: black;
+    border-radius: 20px;
+    opacity: 6%;
+}
+
+.white-circle {
+    height: 18px;
+    width: 18px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.tracking-labels-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    width: 600px;
+    min-width: 300px;
+}
+
+.tracking-labels-container span {
+    display: block;
+    text-align: center;
+    width: 33.33%;
+    font-size: 12px;
+    font-style: italic;
+    color: #DBE0FA;
+}
+
+.tracking-labels-container .current-state-label {
+    color: #0B6DFF;
+}
+
+.upload-main-container {
+    display: flex;
+    justify-content: center;
+    height: 343px;
+    max-height: 500px;
+    width: 100%;
+    padding: 0 50px;
+    margin-top: 20px;
+}
+
+.upload-container {
+    display: block;
+    background-color: #F6F8FE;
+    height: 100%;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 22px;
+    padding: 20px;
+}
+
+.file-container {
+    padding: 20px;
+    height: 70%;
+    background-color: #D7E6FE;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.file-container p {
+    text-align: center;
+    font-size: 13px;
+    font-style: italic;
+    opacity: 46%;
+}
+
+.file-instance {
+    display: flex;
+    align-items: center;
+    padding: 9px 10px;
+    background-color: white;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.file-instance .fa-file-pdf{
+    color: red;
+}
+
+.file-instance .fa-file-word{
+    color: #0B6DFF;
+}
+
+.file-instance .file-icon {
+    margin-right: 10px;
+}
+
+.file-instance span {
+    font-size: 13px;
+}
+
+.file-instance .file-name {
+    width: 360px;
+    min-width: 90px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-instance a {
+    color: black;
+}
+
+.add-file-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 30%;
+}
+
+.add-file-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 117px;
+    height: 41px;
+    background-color: #0B6DFF;
+    border-radius: 33px;
+    cursor: pointer;
+}
+
+.add-file-btn:hover{
+    background-color: #0f54bb;
+}
+
+.add-file-btn > * {
+    color: white;
+    font-size: 12px;
+}
+
+.add-file-btn span {
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+.add-file-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+}
+
+.add-file-panel {
+    position: relative;
+    display: block; 
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 350px;
+    max-height: 580px;
+    border-radius: 13px;
+}
+
+.add-file-panel-container {
+    display: flex;
+    justify-content: center;
+}
+
+.choose-file-btn {
+    background-color: #0B6DFF;
+    color: white;
+    padding: 7px 15px;
+    border-radius: 80px;
+    cursor: pointer;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.choose-file-btn:hover {
+    background-color: #0f54bb;;
+}
+
+.show-no-file {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-style: italic;
+    opacity: 70%;
+    font-size: 13px;
+}
+.show-file {
+    display: none;
+}
+
+.form-container {
+    transition: opacity 0.3s ease;
+}
+
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.file-uploaded-container {
+    display: flex;
+    background-color: #EEF0FD;
+    margin-top: 15px;
+    padding: 10px;
+}
+
+.file-uploaded-container .file-icon {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.file-icon.file-icon-hide {
+    display: none;
+}
+
+.file-uploaded-container .fa-file-pdf {
+    color: red;
+}
+
+.file-uploaded-container .fa-file-word {
+    color: #0B6DFF;
+}
+
+.file-uploaded-container span {
+    display: inline-block;
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    font-size: 13px;
+}
+
+.file-uploaded-container .delete-selected-file-icon {
+    text-align: center;
+    width: 20px;
+}
+
+.add-file-panel input[type="radio"], 
+.add-file-panel input[type="text"], 
+.add-file-panel input[type="file"]{
+    display: none;
+}
+
+.paper-color-container, 
+.page-number-container,
+.custom-page-size-container,
+.file-type-container {
+    display: block;
+    margin-top: 15px;
+    background-color: #EEF0FD;
+    cursor: pointer;
+}
+
+.custom-page-size-container, .file-type-container {
+    padding: 5px 10px;
+}
+
+.choose-file-btn span,
+.paper-color-container span,
+.page-number-container span,
+.custom-page-size-container span,
+.page-size-option-container span,
+.file-type-container span {
+    font-size: 13px;
+}
+
+.paper-color-container .radio,
+.page-number-container .radio,
+.page-size-option-container .radio{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    width: 20px;
+    background-color: #D9D9D9;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.selected {
+    display: none;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: #0B6DFF;
+}
+
+.paper-color-container .paper-color-option,
+.page-number-container .page-number-option,
+.page-size-option-container .paper-size-option{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.selected.active {
+    display: block;
+}
+
+.select-page-no {
+    display: none;
+    padding-bottom: 10px;
+    max-height: 80px; /* Set the maximum height */
+    overflow-y: auto;
+}
+
+.select-page-no label {
+    font-size: 13px;
+    height: 100%;
+}
+
+.select-page-no input[type="checkbox"] {
+    transform: scale(1.4); /* Adjust the scale factor as needed */
+    margin-left: 30px; /* Optional: Adjust spacing around checkbox */
+    margin-right: 5px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 35px;
+    height: 20px;
+}
+  
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+  
+.slider.round {
+    border-radius: 34px;
+}
+  
+.slider.round:before {
+    border-radius: 50%;
+}
+  
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+.switch input:checked + .slider {
+    background-color: #2196F3;
+}
+  
+.switch input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+  
+.switch input:checked + .slider:before {
+    -webkit-transform: translateX(14px);
+    -ms-transform: translateX(14px);
+    transform: translateX(14px);
+}
+
+.page-size-option-container {
+    display: none;
+}
+
+.page-size-option-container.show {
+    display: flex;
+}
+
+.private-reminder {
+    font-size: 9px;
+    opacity: 70%;
+}
+
+.upload-file-action-container {
+    display: flex;
+    justify-content: right;
+    margin-top: 20px;
+}
+
+.upload-file-submit-btn {
+    background-color: #0B6DFF;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 3px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.upload-file-submit-btn:hover{
+    background-color: #0f54bb;
+}
+
+.upload-file-cancel-btn {
+    position: absolute;
+    font-size: 13px;
+    padding: 10px 10px;
+    bottom: 20px;
+    right: 83px;
+    cursor: pointer;
+}
+
+.upload-file-cancel-btn:hover {
+    color: #0B6DFF;
+}
+
+.proceed-button-container {
+    display: flex;
+    justify-content: center;
+    padding: 0 50px;
+    margin-top: 20px;
+}
+
+.proceed-button-sub-container {
+    display: flex;
+    justify-content: right;
+    width: 100%;
+    max-width: 500px;
+}
+
+.proceed-payment-btn {
+    display: flex;
+    width: 196px;
+    height: 54px;
+    border-radius: 35px;
+    padding: 10px;
+    padding-left: 18px;
+    background-color: #DAE9FF;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.proceed-payment-btn span {
+    font-size: 12px;
+    color: #0B6DFF;
+    font-weight: bold;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #0B6DFF;
+    border-radius: 50%;
+}
+
+.icon-container i {
+    color: white;
+    font-weight: bold;
+}
+
+.proceed-button-sub-container a {
+    text-decoration: none;
+}
+
+/*
 .upload-container {
     width: 100%;
     justify-content: center;
@@ -25,7 +555,7 @@ body {
     width: 100%;
     text-align: center;
 }
-
+/*
 .upload-container-content {
     display: flex;
     justify-content: center;
@@ -58,6 +588,7 @@ input[type="file"] {
     color: white;
     cursor: pointer;
 }
+*/
 
 /*
 input[type="file"]::-webkit-file-upload-text {

@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="{% static 'css/generic-style.css' %}" rel="stylesheet">
         <link href="{% static 'css/user-upload-files-style.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <title>Welcome to PrintHub!</title>
         
     </head>
@@ -14,31 +15,399 @@
     <body>
         
         <div class="main-container">
-            <div class="upload-container">
-                <h1>Upload Files</h1>
-                <div class="upload-container-content">
-                    <form id="uploadForm" action="{%url 'user_upload_files' %}" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="choose-file-btn-display">
-                            <span>CHOOSE FILES</span>
-                        </div>
-                        <input class="choose-file-btn" type="file" name="files" accept=".pdf,.doc,.docx" multiple>
-                        <input type="hidden" name="user_folder_no" value="{{ user_folder_no }}">
-                    </form>
+
+            <div class="navigation">
+                <div class="menu-icon-container">
+                    <i class="fa-solid fa-bars"></i>
                 </div>
             </div>
+
+            <div class="center-container">
+                <div class="tracking-container">
+                    <div class="line-tracker"><div class="line"></div></div>
+                    <div class="upload-file-state state current-state"> <div class="white-circle"></div> </div>
+                    <div class="payment-state state"></div>
+                    <div class="printing-status-state state"></div>
+                </div>
+            </div>
+            
+            <div class="center-container">
+                <div class="tracking-labels-container">
+                    <span class="current-state-label">Upload Files</span>
+                    <span>Payment</span>
+                    <span>Printing Status</span>
+                </div>
+            </div>
+            
+            <div class="upload-main-container">
+                <div class="upload-container">
+
+                    <!-- FILE CONTAINER-->
+                    <div class="file-container">
+                        {% if user_filenames %}
+                            {% for file in user_filenames %}
+                                <div class="file-instance">
+                                    {% if file.file_extension == "pdf" %}
+                                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                                    {% elif file.file_extension == "doc" or file.file_extension == "docx" %}
+                                        <i class="fa-solid fa-file-word file-icon"></i>
+                                    {% else %}
+                                        <i class="fa-solid fa-file-word file-icon"></i> 
+                                    {% endif %}
+                                    <span class="file-name" id="fileName">{{ file.file_name }}</span>
+                                    <a href="{% url 'delete_file' file.user_file_no %}" class="delete-file-link">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>No files uploaded.</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- ADD FILE BUTTON -->
+                    <div class="add-file-container">
+                        <div class="add-file-btn">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span>Add File</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="proceed-button-container">
+                <div class="proceed-button-sub-container" >
+                    <a href="{% url 'user_payment_page' %}" id="proceedBtn">
+                        <div class="proceed-payment-btn">
+                            <span>Proceed To Payment</span> <div class="icon-container"><i class="fa-solid fa-arrow-right"></i></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="add-file-modal">
+                <div class="add-file-panel">
+                    <div class="add-file-panel-container">
+                        <div class="choose-file-btn">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> <span>Choose File</span>
+                        </div>
+                    </div>
+
+                    <div class="file-uploaded-container">
+                        <div class="show-no-file">No file uploaded</div>
+                        <div class="show-file">
+                            <i class="fa-solid fa-file-pdf file-icon file-icon-hide"></i>
+                            <i class="fa-solid fa-file-word file-icon file-icon-hide"></i>
+                            <span id="filename"></span> 
+                            <i class="fa-solid fa-xmark delete-selected-file-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-container disabled">
+                        <form action="{% url 'user_upload_files' %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %} 
+                            <div class="paper-color-container">
+                                <div class="colored-option paper-color-option" onclick="selectPageColorOption('colored')">
+                                    <div class="colored-btn radio"> <div class="selected"></div> </div> <span>Colored</span>
+                                </div>
+                                <div class="black-and-white-option paper-color-option" onclick="selectPageColorOption('b&w')">
+                                    <div class="black-and-white-btn radio"> <div class="selected"></div> </div> <span>Black & White</span>
+                                </div>
+                            </div>
+
+                            <div class="page-number-container">
+                                <div class="all-pages-option page-number-option" onclick="selectPageNumberOption('all-pages')">
+                                    <div class="all-page-btn radio"><div class="selected"></div></div><span>All pages</span>
+                                </div>
+                                <div class="custom-pages-option page-number-option" onclick="selectPageNumberOption('custom-pages')">
+                                    <div class="custom-page-btn radio"><div class="selected"></div></div><span>Select page/s to print:</span>
+                                </div>
+                                <div class="select-page-no">
+                                </div>
+                            </div>
+                            
+                            <div class="custom-page-size-container">
+                                <span>Custom Page Size</span> 
+                                <label class="switch">
+                                    <input type="checkbox" class="toggle-switch" id="toggle1">
+                                    <span class="slider round"></span>
+                                </label>
+
+                                <div class="page-size-option-container">
+                                    <div class="a4-option paper-size-option" onclick="selectPageSizeOption('a4')">
+                                        <div class="a4-btn radio"> <div class="selected"></div> </div> <span>A4</span>
+                                        <input type="radio" id="a4" name="custom-page-size" value="a4">
+                                    </div>
+                                    <div class="short-option paper-size-option" onclick="selectPageSizeOption('short')">
+                                        <div class="short-btn radio"> <div class="selected"></div> </div> <span>SHORT</span>
+                                        <input type="radio" id="short" name="custom-page-size" value="short">
+                                    </div>
+                                    <div class="long-option paper-size-option" onclick="selectPageSizeOption('long')">
+                                        <div class="long-btn radio"> <div class="selected"></div> </div> <span>LONG</span>
+                                        <input type="radio" id="long" name="custom-page-size" value="long">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="file-type-container">
+                                <span>Private</span> 
+                                <label class="switch">
+                                    <input type="checkbox" name="file-type" class="toggle-switch" id="toggle2">
+                                    <span class="slider round"></span>
+                                </label>
+                                <p class="private-reminder">Recommended for files containing sensitive information. By activating this, shop won't be able to download and see your file.</p>
+                            </div>
+                            
+                            <div class="upload-file-action-container">
+                                <input type="submit" value="Submit" class="upload-file-submit-btn">
+                            </div>
+
+                            <input class="choose-file-btn" type="file" name="file" id="fileInput" accept=".pdf,.doc,.docx">
+                            <input type="text" name="paper-color" id="paper-color" required>
+                            <input type="text" name="page-number" id="page-number" required>
+                            <!-- <input type="text" name="file-type" id="file-type" value="regular"> -->
+
+                        </form>
+                    </div>
+                    <span class="upload-file-cancel-btn">Cancel</span>
+                    
+                </div>
+            </div>
+            
         </div>
 
     </body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
     <script>
-        document.querySelector('input[type="file"]').addEventListener('change', function() {
-            document.getElementById('uploadForm').submit();
+
+        var noOfpages = 0;
+
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.worker.min.js';
+        
+        document.querySelector('.add-file-btn').addEventListener('click', function() {
+            document.querySelector('.add-file-modal').style.display = "flex";
         });
 
-        document.querySelector('.choose-file-btn-display').addEventListener('click', function() {
+        function selectPageColorOption(option) {
+
+            document.querySelectorAll('.paper-color-container .selected').forEach(el => el.classList.remove('active'));
+    
+            if (option === 'colored') {
+                document.querySelector('.colored-option .selected').classList.add('active');
+                document.getElementById('paper-color').value = 'colored';
+            } else {
+                document.querySelector('.black-and-white-option .selected').classList.add('active');
+                document.getElementById('paper-color').value = 'b&w';
+            }
+        }
+
+        function selectPageNumberOption(option) {
+            
+            document.querySelectorAll('.page-number-container .selected').forEach(el => el.classList.remove('active'));
+
+            if (option === 'all-pages') {
+                document.querySelector('.all-pages-option .selected').classList.add('active');
+                document.getElementById('page-number').value = 'all-pages';
+                document.querySelector('.select-page-no').style.display = "none";
+            } else {
+                document.querySelector('.custom-pages-option .selected').classList.add('active');
+                document.getElementById('page-number').value = 'custom';
+                document.querySelector('.select-page-no').style.display = "block";
+                createCheckboxes();
+            }
+        }
+
+        function selectPageSizeOption(option) {
+            
+            document.querySelectorAll('.page-size-option-container .selected').forEach(el => el.classList.remove('active'));
+            document.getElementById(option).checked = true;
+            if (option === 'a4') {
+                document.querySelector('.a4-option .selected').classList.add('active');
+                //document.getElementById('custom-page-size').value = 'a4';
+            } else if(option === 'short') {
+                document.querySelector('.short-option .selected').classList.add('active');
+                //document.getElementById('custom-page-size').value = 'short';
+            } else if(option === 'long') {
+                document.querySelector('.long-option .selected').classList.add('active');
+                //document.getElementById('custom-page-size').value = 'long';
+            }
+        }
+        
+        document.querySelector('.choose-file-btn').addEventListener('click', function() {
             document.querySelector('input[type="file"]').click();
         });
 
+        function createCheckboxes() {
+
+            // Get the container where checkboxes will be appended
+            const container = document.querySelector('.select-page-no');
+
+            // Clear any existing checkboxes
+            container.innerHTML = '';
+            
+            for (let i = 1; i <= noOfpages; i++) {
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `option${i}`;
+                checkbox.name = 'custom-page';
+                checkbox.value = `${i}`;
+
+                const label = document.createElement('label');
+                label.htmlFor = `option${i}`;
+                label.textContent = `Page ${i}`;
+
+                container.appendChild(checkbox);
+                container.appendChild(label);
+                container.appendChild(document.createElement('br'));
+            }
+            
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const pdfIcon = document.querySelector('.file-uploaded-container .fa-file-pdf');
+            const wordIcon = document.querySelector('.file-uploaded-container .fa-file-word');
+
+            const fileInput = document.getElementById('fileInput');
+            fileInput.addEventListener('change', function() {
+
+                document.querySelectorAll('.selected').forEach(el => el.classList.remove('active'));
+                document.getElementById('page-number').value = 'all';
+                document.querySelector('.select-page-no').style.display = "none";
+                
+                document.querySelectorAll('.toggle-switch').forEach(function(toggle) {
+                if (toggle.checked) {
+                    toggle.checked = false;
+                    }
+                });
+                
+                document.querySelector('.page-size-option-container').classList.remove('show');
+                //document.getElementById('custom-page-size').value = 'none';
+                //document.getElementById('file-type').value = 'regular';
+
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const fileName = file.name;
+                    const fileType = file.type;
+                    
+                    pdfIcon.classList.add('file-icon-hide'); 
+                    wordIcon.classList.add('file-icon-hide');
+
+                    if (fileType === 'application/pdf') {
+                        pdfIcon.classList.remove('file-icon-hide');
+
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const typedarray = new Uint8Array(e.target.result);
+                            pdfjsLib.getDocument(typedarray).promise.then(function(pdf) {
+                                noOfpages = pdf.numPages;
+                            });
+                        };
+                        reader.readAsArrayBuffer(file);
+
+                    } else if (fileType === 'application/msword' || fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                        wordIcon.classList.remove('file-icon-hide');
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            mammoth.convertToHtml({ arrayBuffer: e.target.result })
+                                .then(function(result) {
+                                    const htmlString = result.value;
+                                    const tempDiv = document.createElement('div');
+                                    tempDiv.innerHTML = htmlString;
+                                    document.body.appendChild(tempDiv);
+
+                                    const typicalPageHeight = 1100; // Example typical page height in pixels
+                                    const pageCount = Math.ceil(tempDiv.offsetHeight / typicalPageHeight);
+                                    document.body.removeChild(tempDiv);
+                                    noOfpages = pageCount;
+                                })
+                                .catch(function(err) {
+                                    console.error(err);
+                                    fileStatus.textContent = 'Error reading Word file';
+                                });
+                        };
+                        reader.readAsArrayBuffer(file);
+                    } 
+                    
+                    document.querySelector('.show-no-file').style.display = "none";
+                    document.querySelector('.show-file').style.display = "flex";
+                    document.getElementById('filename').textContent = fileName;
+                    document.querySelector('.form-container').classList.remove('disabled');
+
+                } else {
+                    document.querySelector('.show-no-file').style.display = "block";
+                    document.querySelector('.show-file').style.display = "none";
+                    document.querySelector('.form-container').classList.add('disabled');
+                }
+            });
+
+
+            const fileName = document.getElementById('fileName');
+            if(fileName) {
+                document.querySelector('.proceed-button-sub-container').style.opacity = "1";
+            }else {
+                document.querySelector('.proceed-button-sub-container').style.opacity = "35%";
+                const proceedBtn = document.getElementById('proceedBtn');
+                proceedBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                });
+                
+            }
+
+        });
+
+        document.getElementById('toggle1').addEventListener('change', function() {
+            var status = this.checked ? 'on' : 'off';
+
+            if(this.checked) {
+                document.querySelector('.page-size-option-container').classList.add('show');
+                document.querySelectorAll('.page-size-option-container input[type="radio"]').forEach((radio) => {
+                    radio.required = true;
+                });
+            } else {
+                document.querySelector('.page-size-option-container').classList.remove('show');
+                document.querySelectorAll('.page-size-option-container .selected').forEach(el => el.classList.remove('active'));
+                //document.getElementById('custom-page-size').value = 'none';
+                document.querySelectorAll('.page-size-option-container input[type="radio"]').forEach((radio) => {
+                    radio.required = false;
+                });
+                document.querySelectorAll('.page-size-option-container input[type="radio"]').forEach((radio) => {
+                    radio.checked = false;
+                });
+            }
+        });
+
+        document.getElementById('toggle2').addEventListener('change', function() {
+            var status = this.checked ? 'on' : 'off';
+
+        });
+        
+        document.querySelector('.delete-selected-file-icon').addEventListener('click', function() {
+            document.querySelectorAll('.selected').forEach(el => el.classList.remove('active'));
+            const fileInput = document.getElementById('fileInput').value = "";
+            document.querySelector('.show-no-file').style.display = "block";
+            document.querySelector('.show-file').style.display = "none";
+            document.querySelector('.form-container').classList.add('disabled');
+            document.querySelector('.select-page-no').style.display = "none";
+            document.querySelectorAll('.toggle-switch').forEach(function(toggle) {
+                if (toggle.checked) {
+                toggle.checked = false;
+                }
+            });
+            document.querySelector('.page-size-option-container').classList.remove('show');
+            document.querySelectorAll('.page-size-option-container input[type="radio"]').forEach((radio) => {
+                radio.required = false;
+            });
+            document.querySelectorAll('.page-size-option-container input[type="radio"]').forEach((radio) => {
+                radio.checked = false;
+            });
+        });
+
+        document.querySelector('.upload-file-cancel-btn').addEventListener('click', function() {
+            document.querySelector('.add-file-modal').style.display = "none";
+        });
     </script>
 
 </html>

@@ -11,7 +11,18 @@ import json
 from django.urls import reverse
 import os
 from django.core.files.storage import default_storage
+from django.conf import settings
+from pdf2image import convert_from_path
+import cv2
+import numpy as np
+from docx import Document
 import fitz
+from PIL import Image, ImageFilter
+import pytesseract
+import io
+import comtypes.client
+import pythoncom
+
 
 def main_page (request):
     return render(request, 'main-page.html')
@@ -73,8 +84,6 @@ def shop_create_folder(request):
         except Shop.DoesNotExist:
             messages.error(request, 'Shop not found.')
             return redirect('shop_dashboard')
-        
-            
         
         if shop.has_shop_rate:
 
@@ -153,7 +162,6 @@ def shop_edit_price(request):
         shop_rate.save()
 
         return redirect('shop_prices')
-
 
 def shop_logout(request):
     if 'shop_id' in request.session:
@@ -259,8 +267,6 @@ def user_redirect_when_shop_clicked(request):
 
         shop_folder_count = ShopFolder.objects.filter(folder_id=shop).count()
 
-        
-
         redirect_url = reverse('user_upload_file') + f'?shop_folder_count={shop_folder_count}&shop_id={shop_id}'
         return JsonResponse({'redirect_url': redirect_url})
 
@@ -278,34 +284,35 @@ def user_upload_file(request):
 
     if int(shop_folder_count) == 0:
         return render(request, 'user/shop-zero-folder.html', shop_info)
+    
     elif int(shop_folder_count) == 1:
 
-        user_id = request.session.get('id')
-        shop_folder = ShopFolder.objects.filter(folder_id=shop_id).first()
+        user_id = request.session.get('id') # request user id
+        shop_folder = ShopFolder.objects.filter(folder_id=shop_id).first() # kuhain yung nag iisang shop folder
         
         try:
-            user = User.objects.get(id=user_id)
+            user = User.objects.get(id=user_id) # kunin si user para gumawa ng folder nya sa shop folder
         except User.DoesNotExist:
             messages.error(request, 'User not found.')
 
         try:
-            user_folder = UserFolder.objects.get(user=user)
+            user_folder = UserFolder.objects.get(user=user) # if existing na folder ni user kay shop, kuhain
         except UserFolder.DoesNotExist:
-            UserFolder.objects.create(folder_parent=shop_folder, user=user)
+            user_folder = UserFolder.objects.create(folder_parent=shop_folder, user=user) # gumawa ng bagong folder if wala pa folder kay shop
 
-        file_parent = user_folder.user_folder_no
-
+        request.session['file_parent'] = user_folder.user_folder_no 
+        
         try:
-            user_files = UserFile.objects.filter(file_parent=file_parent)
+            user_files = UserFile.objects.filter(file_parent=user_folder.user_folder_no)
+            user_filenames = [{'user_file_no': file.user_file_no, 
+                            'file_name': file.file.name.replace(str(file.file_parent.folder_parent.folder_id.shop_id)+'/'+str(file.file_parent.folder_parent.folder_no)+'/'+str(file.file_parent.user_folder_no)+'/', ''), 
+                            'file_extension': file.file.name.split('.')[-1]} for file in user_files]
         except UserFile.DoesNotExist:
             messages.error(request, 'User not found.')
-            user_files = []
-
-        user_filenames = [{'file_name': file.file.name} for file in user_files]
+            user_filenames = []
 
         context = {
-            'user_folder_no': user_folder.user_folder_no,
-            'user_filenames': user_filenames
+            'user_filenames': user_filenames,
         }
 
         return render(request, 'user/user-upload-files.html', context)
@@ -316,36 +323,302 @@ def user_upload_file(request):
     return redirect('user_dashboard')
 
 def user_upload_files(request):
+    
+    if request.method == 'POST' and request.FILES['file']:
 
-    if request.method == 'POST':
-
-        user_folder_no = request.POST.get('user_folder_no')
-
-        try:
-            file_parent = UserFolder.objects.get(user_folder_no=user_folder_no)
-        except UserFolder.DoesNotExist:
+        user_folder_no = request.session.get('file_parent')
+        
+        uploaded_file = request.FILES['file']
+        paper_color = request.POST.get('paper-color')
+        page_number = request.POST.get('page-number')
+        if page_number == 'all-pages':
             pass
+        else:
+            selected_pages = request.POST.getlist('custom-page')
+            page_number = ','.join(selected_pages)
+
+        if 'file-type' in request.POST:
+            file_type = 'private'
+        else:
+            file_type = 'regular'
+
+        custom_page_size = request.POST.get('custom-page-size') # None if non custom
+        
+        if custom_page_size is None:
+            custom_page_size = "none"
+
+        file_parent = UserFolder.objects.get(user_folder_no=user_folder_no)
+        new_file = UserFile(file=uploaded_file, custom_page_size=custom_page_size, file_type=file_type, page_number=page_number, paper_color=paper_color, file_parent=file_parent)
+        new_file.save()
+
+
+        return redirect('user_upload_files')
+    
+    user_folder_no = request.session.get('file_parent')
+
+    try:
+        user_files = UserFile.objects.filter(file_parent=user_folder_no)
+        user_filenames = [{'user_file_no': file.user_file_no, 
+                           'file_name': file.file.name.replace(str(file.file_parent.folder_parent.folder_id.shop_id)+'/'+str(file.file_parent.folder_parent.folder_no)+'/'+str(file.file_parent.user_folder_no)+'/', ''), 
+                           'file_extension': file.file.name.split('.')[-1]} for file in user_files]
+    except UserFile.DoesNotExist:
+        messages.error(request, 'User not found.')
+        user_filenames = []
+
+    context = {
+        'user_filenames': user_filenames,
+    }
+
+    return render(request, 'user/user-upload-files.html', context)
+
+def user_payment_page(request):
+    
+    user_folder_no = request.session.get('file_parent')
+
+    try:
+        user_files = UserFile.objects.filter(file_parent=user_folder_no)
+    except UserFile.DoesNotExist:
+        messages.error(request, 'User not found.')
+
+    totalBill = 0
+    hasPrice = True
+
+    for file in user_files:
+        if file.price is None:
+            hasPrice = False
+            break
+        else:
+            totalBill += file.price
+
+    if hasPrice:
+        context = {
+            'totalBill': totalBill,
+        }
+        return render(request, 'user/user-payment-page.html', context)
+
+
+    for file in user_files:
+
+        base_name, extension = os.path.splitext(str(file.file))
+        file_path = os.path.join(settings.MEDIA_ROOT, str(file.file))
+
+        if extension == '.pdf':
+            totalBill += process_pdf(file, file_path)
+            setattr(file, "price", process_pdf(file, file_path))
+            file.save()
+        else:
+            file_path = convert_to_pdf(file_path)
+            totalBill += process_pdf(file, file_path)
+            setattr(file, "price", process_pdf(file, file_path))
+            file.save()
             
-        requested_files = request.FILES.getlist('files')
+    context = {
+        'totalBill': totalBill,
+    }
 
-        for file in requested_files:
-            new_file = UserFile(file=file, file_parent=file_parent)
-            new_file.save()
+    return render(request, 'user/user-payment-page.html', context)
 
-            # Optionally, you may want to redirect to a different view after successful upload
-        return render(request, 'user/user-upload-files.html', {'user_folder_no':user_folder_no})
+def user_cash_payment(request):
 
-def user_test_upload(request):
-    return render (request, "user/test-upload.html")
+    user_folder_no = request.session.get('file_parent')
+    files = UserFile.objects.filter(file_parent=user_folder_no)
 
-def t_upload_files(request):
-    if request.method == 'POST':
+    totalBill = 0
+    for file in files:
+        totalBill += file.price
 
-        g_file = request.FILES.getlist('user_file')
-        for file in g_file:
-            new_file = TestFile(file=file)
-            new_file.save()
+    context = {
+        'totalBill': totalBill,
+    }
+
+    user_folder = UserFolder.objects.get(user_folder_no = user_folder_no)
+    setattr(user_folder, "status", "for payment")
+    user_folder.save()
+
+
+    return render(request, 'user/user-pay-at-counter.html', context)
+
+def analyze_pdf_with_custom_pages(file, custom_pages):
+    results = {}
+    doc = fitz.open(file)
+    for page_num in range(len(doc)):
+        if (page_num+1) in custom_pages:
+            page = doc.load_page(page_num)
+            pix = page.get_pixmap()
+            image = Image.open(io.BytesIO(pix.tobytes()))
+            page_data = count_colored_pixels(image)
+            results[page_num+1] = get_page_status(page_data)
+    return results
+
+def analyze_pdf_with_all_pages(file):
+    results = {}
+    doc = fitz.open(file)
+    for page_num in range(len(doc)):
+        page = doc.load_page(page_num)
+        pix = page.get_pixmap()
+        image = Image.open(io.BytesIO(pix.tobytes()))
+        page_data = count_colored_pixels(image)
+
+        results[page_num + 1] = get_page_status(page_data)
+    return results
+
+def get_page_status(page_data):
+    colored_pixels = page_data[0]
+    total_pixels = page_data[1]
+
+    percentage = round((colored_pixels / total_pixels) * 100)
+
+    if colored_pixels == 0:
+        return 'bw'
+    elif percentage >= 41 and percentage <= 100:
+        return 'high'
+    elif percentage >= 21 and percentage <= 40:
+        return 'medium'
+    else:
+        return 'low'
+
+def count_colored_pixels(image):
+    page_data = []
+    colored_pixels = 0
+    total_pixels = 0
+    # Convert image to LAB color space
+    image = image.convert('LAB')
+
+    # Define thresholds
+    L_threshold_black = 30  # Near-black luminance threshold
+    L_threshold_white = 225  # Near-white luminance threshold
+    A_threshold = 10  # Color component threshold for A
+    B_threshold = 10
+
+    for pixel in image.getdata():
+        L, A, B = pixel
+        # Check if pixel is not near white or black
+        if not (L < L_threshold_black or L > L_threshold_white):
+            # Ensure the pixel has significant color component
+            if abs(A - 128) > A_threshold or abs(B - 128) > B_threshold:
+                colored_pixels += 1
+        total_pixels += 1
+
+    page_data.append(colored_pixels)
+    page_data.append(total_pixels)
+    return page_data
+
+def get_pdf_page_size(filepath):
+    doc = fitz.open(filepath)
+    page = doc[0]
+    page_width = round(page.rect.width, 2)
+    page_height = round(page.rect.height, 2)
+    area = round((page_width * page_height), 2)
+
+    if area == 484704.0:
+        return "short"
+    elif area == 501211.81:
+        return "a4"
+    else:
+        return "long"
+
+def get_pdf_page_count(file_path):
+    doc = fitz.open(file_path)
+    page_count = doc.page_count
+    doc.close()
+    return page_count
+
+def process_pdf(file, file_path):
+
+    if file.paper_color == 'colored':
+        actual_page_size = get_pdf_page_size(file_path)
+        setattr(file, "actual_page_size", actual_page_size)
+        file.save()
+
+        if file.page_number == 'all-pages':
+            pages = analyze_pdf_with_all_pages(file_path)
+        else:
+            custom_pages = file.page_number
+            custom_pages = [int(n) for n in custom_pages.split(',')]
+            pages = analyze_pdf_with_custom_pages(file_path, custom_pages)
+
+        price = 0
+
+        for page_status in pages.values():
             
-            file_path = os.path.join(default_storage.location, 'test_uploads', new_file.name)
+            if file.custom_page_size == 'none':
+                file_rate_type = actual_page_size + "_"
+            else:
+                file_rate_type = file.custom_page_size + "_"
 
-    return redirect('user_test_upload')
+            if page_status == 'bw':
+                file_rate_type += page_status
+            else:
+                file_rate_type += 'colored_' + page_status
+            
+            shop_id = file.file_parent.folder_parent.folder_id.shop_id
+            shop = Shop.objects.get(shop_id=shop_id)
+            shop_rate = ShopRate.objects.get(shop_id=shop)
+
+            price += getattr(shop_rate, file_rate_type, None) 
+
+        return price
+            
+    else:
+        actual_page_size = get_pdf_page_size(file_path)
+        setattr(file, "actual_page_size", actual_page_size)
+        file.save()
+        
+        file_rate_type = "_bw"
+
+        if file.custom_page_size == 'none':
+            file_rate_type = actual_page_size + file_rate_type
+        else:
+            file_rate_type = file.custom_page_size + file_rate_type
+
+        if file.page_number == 'all-pages':
+            page_count = get_pdf_page_count(file_path)
+        else:
+            page_count = len((file.page_number).split(','))
+
+        shop_id = file.file_parent.folder_parent.folder_id.shop_id
+        shop = Shop.objects.get(shop_id=shop_id)
+        shop_rate = ShopRate.objects.get(shop_id=shop)
+
+        price = getattr(shop_rate, file_rate_type, None) * page_count
+        return price
+
+def convert_to_pdf(file_path):
+    try:
+        pythoncom.CoInitialize()  # Initialize COM
+        
+        word = comtypes.client.CreateObject('Word.Application')
+        word.Visible = False
+        
+        # Load the document
+        doc = word.Documents.Open(file_path)
+        
+        # Construct the output file path
+        pdf_path = os.path.splitext(file_path)[0] + ".pdf"
+        
+        # Save as PDF
+        doc.SaveAs(pdf_path, FileFormat=17)
+        doc.Close()
+        word.Quit()
+        
+        pythoncom.CoUninitialize()  # Uninitialize COM
+        
+        return pdf_path
+    
+    except Exception as e:
+        print(f"Error converting file: {e}")
+        pythoncom.CoUninitialize()  # Ensure COM is properly uninitialized on error
+        return None
+    
+def delete_file(request, user_file_no):
+    try:
+        file_to_delete = UserFile.objects.get(user_file_no=user_file_no)
+        file_path = os.path.join(settings.MEDIA_ROOT, file_to_delete.file.name)
+
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        file_to_delete.delete()
+        #messages.success(request, 'File deleted successfully.')
+    except UserFile.DoesNotExist:
+        messages.error(request, 'File not found.')
+    return redirect('user_upload_files')

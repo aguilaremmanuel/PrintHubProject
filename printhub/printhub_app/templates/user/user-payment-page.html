@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'css/generic-style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/user-payment-style.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <title>Payment!</title>
+        
+    </head>
+
+    <body>
+        
+        <div class="main-container">
+
+            <div class="navigation">
+                <div class="menu-icon-container">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+
+            <div class="center-container">
+                <div class="tracking-container">
+                    <div class="line-tracker"><div class="line finished-line"></div><div class="line"></div></div>
+                    <div class="upload-file-state state finished-state"> <i class="fa-solid fa-check"></i> </div>
+                    <div class="payment-state state current-state"><div class="white-circle"></div></div>
+                    <div class="printing-status-state state"></div>
+                </div>
+            </div>
+            
+            <div class="center-container">
+                <div class="tracking-labels-container">
+                    <span class="current-state-label">Upload Files</span>
+                    <span class="current-state-label">Payment</span>
+                    <span>Printing Status</span>
+                </div>
+            </div>
+
+            <div class="center-payment-container">
+                <div class="payment-container">
+                    <div class="bill-container">
+                        <span class="total-txt">Total:</span>
+                        <div class="price-center">
+                            <span><i class="fa-solid fa-peso-sign"></i></span><span id="price-txt">{{totalBill}}</span>
+                        </div>
+                    </div>
+
+                    <div class="payment-method-container">
+                        <div class="pay-online-container">
+                            <p>Pay Online</p>
+                            <div class="payment-images">
+                                <img src="{% static 'images/gcash-logo.png'%}" alt="GCASH LOGO" class="gcash-logo">
+                                <img src="{% static 'images/maya-logo.png'%}" alt="MAYA LOGO">
+                            </div>
+                        </div>
+
+                        <a href="{% url 'user_cash_payment' %}">
+                            <div class="pay-counter-container"><p>Pay at the Counter</p>
+                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="center-back-container">
+                <div class="justify-back-container">
+                    <a href="{% url 'user_upload_files' %}" id="backBtn">
+                        <div class="back-btn">
+                            <div class="icon-container"><i class="fa-solid fa-arrow-left"></i></div><span>Back</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </body>
+</html>

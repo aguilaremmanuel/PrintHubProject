@@ -1,0 +1,298 @@
+.main-container {
+    display: block;
+}
+
+.navigation {
+    width: 100%;
+    height: 65px;
+    background-color: #0B6DFF;
+}
+
+.navigation .menu-icon-container {
+    display: flex;
+    align-items: center;
+    width: 100px;
+    height: 100%;
+    margin-left: 30px;
+}
+
+.navigation i {
+    font-size: 27px;
+    color: white;
+    cursor: pointer;
+}
+
+.center-container {
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.tracking-container {
+    display: flex;
+    position: relative;
+    padding: 20px 70px;
+    padding-bottom: 10px;
+    justify-content: space-between;
+    align-items: center;
+    width: 600px;
+    min-width: 300px;
+}
+
+.tracking-container .state {
+    display: flex;
+    background-color: #DBE0FA;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
+
+.tracking-container .finished-state {
+    justify-content: center;
+    align-items: center;
+    background-color: #00FF29;
+}
+
+.upload-file-state.state.finished-state i{
+    color: white;
+}
+
+.tracking-container .current-state {
+    background-color: #0B6DFF;
+    justify-content: center;
+    align-items: center;
+}
+
+.tracking-container .line-tracker {
+    left: 0;
+    padding: 0 70px;
+    position: absolute;
+    width:100%;
+    max-width: 100%;
+    height: 18px;
+    z-index: -1;
+}
+
+.line-tracker .line {
+    display: inline-block;
+    height: 100%;
+    width:50%;
+    background-color: black;
+    border-radius: 20px;
+    opacity: 6%;
+}
+
+.line-tracker .line.finished-line {
+    background-color: #00FF29;
+    opacity: 18%;
+}
+
+.white-circle {
+    height: 18px;
+    width: 18px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.tracking-labels-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    width: 600px;
+    min-width: 300px;
+}
+
+.tracking-labels-container span {
+    display: block;
+    text-align: center;
+    width: 33.33%;
+    font-size: 12px;
+    font-style: italic;
+    color: #DBE0FA;
+}
+
+.tracking-labels-container .current-state-label {
+    color: #0B6DFF;
+}
+
+.center-payment-container {
+    display: flex;
+    justify-content: center;
+    height: 443px;
+    max-height: 500px;
+    width: 100%;
+    padding: 0 50px;
+    margin-top: 20px;
+}
+
+.payment-container {
+    display: block;
+    background-color: #F6F8FE;
+    height: 100%;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 22px;
+    padding: 20px;
+}
+
+.bill-container {
+    background-color: white;
+    height: 128px;
+    width: 100%;
+    border-radius: 11px;
+}
+
+.total-txt {
+    display: block;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    opacity: 50%;
+}
+
+.price-center {
+    display: flex;
+    justify-content:center;
+    align-items: last baseline;
+    width: 100%;
+    padding: 20px;
+    height: 90px;
+}
+
+.price-center i {
+    opacity: 40%;
+    font-size: 23px;
+}
+
+#price-txt {
+    font-size: 48px;
+    margin-left: 15px;
+    font-weight: bold;
+}
+
+.payment-method-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 110px;
+}
+
+.pay-online-container {
+    margin-right: 30px;
+    border: 2px solid #03e028;
+}
+
+.pay-counter-container {
+    border: 2px solid #0B6DFF
+}
+
+.pay-online-container,
+.pay-counter-container {
+    height:112px;
+    width: 117px;
+    background-color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.payment-method-container a {
+    text-decoration: none;
+    color: black;
+}
+
+.payment-method-container p {
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.payment-images {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.payment-images img {
+    height: 38px;
+    border-radius: 5px;
+}
+
+.payment-images .gcash-logo {
+    margin-right: 5px;
+}
+
+.fa-hand-holding-dollar {
+    width: 100%;
+    text-align: center;
+    font-size: 33px;
+    color:#0B6DFF;
+}
+
+.center-back-container {
+    display: flex;
+    justify-content: center;
+    padding: 0 50px;
+    margin-top: 20px;
+}
+
+.justify-back-container {
+    display: flex;
+    justify-content: left;
+    width: 100%;
+    max-width: 500px;
+}
+
+#backBtn {
+    text-decoration: none;
+}
+
+.back-btn {
+    display: flex;
+    width: 120px;
+    height: 54px;
+    border-radius: 35px;
+    padding: 10px;
+    padding-right: 18px;
+    background-color: #DAE9FF;
+    align-items: center;
+    justify-content: left;
+}
+
+.back-btn span {
+    font-size: 12px;
+    color: #0B6DFF;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #0B6DFF;
+    border-radius: 50%;
+}
+
+.icon-container i {
+    color: white;
+    font-weight: bold;
+}
+
+.status-icon-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.status-icon-container i {
+    font-size: 125px;
+    color: #FFF618;
+}
+
+.awainting-txt {
+    text-align: center;
+    font-style: italic;
+    font-size: 13px;
+    margin-top: 30px;
+}
