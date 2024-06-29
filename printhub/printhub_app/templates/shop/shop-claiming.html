@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'css/generic-style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/shop-dashboard-style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/shop-home-style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/payment-printing-claiming.css' %}" rel="stylesheet">
+        <link href="{% static 'css/shop-claiming.css' %}" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <title>CLAIMING</title>
+    </head>
+    <body>
+        
+        <div class="navigation">
+            <img src="{% static 'images/logo.png' %}" alt="Company Logo">
+
+            <div class="nav-links-container">
+                <a href="#" class="home-link link-hovered"><i class="fa-solid fa-house first-icon icon-hovered"></i> <span class="home-text link-text-hovered">Home</span></a>
+                <a href="{% url 'shop_prices' %}"><i class="fa-solid fa-tag"></i><span>Prices</span></a>  
+                <a href="#"><i class="fa-solid fa-user-slash"></i><span>Restricted Users</span></a> 
+                <a href="#"><i class="fa-solid fa-money-check"></i><span>Subscriptions</span></a>
+                <a href="#"><i class="fa-solid fa-chart-pie"></i><span>Reports</span></a>
+            </div>
+
+        </div>
+
+        <div class="main-panel">
+
+            <div class="profile-container">
+                <span>Kween Leng Leng</span> <i class="fa-solid fa-circle-user"></i>
+            </div>
+            <div class="tab-container">
+                <div class="payment-tab-container tab-instance" id="payment-tab">
+                    <div class="payment-items-container">
+                        <i class="fa-solid fa-credit-card"></i> <span>PAYMENT</span>
+                    </div>
+                    <a href="{% url 'shop_payment' %}" id="payment-link"></a>
+                </div>
+                <div class="printing-tab-container tab-instance" id="printing-tab">
+                    <div class="printing-sub-background">
+                        <i class="fa-solid fa-print"></i><span>PRINTING</span>
+                    </div>
+                    <a href="{% url 'shop_printing' %}" id="printing-link"></a>
+                </div>
+                <div class="claiming-tab-container tab-instance current-tab">
+                    <div class="claiming-sub-container">
+                        <i class="fa-solid fa-circle-check"></i><span>CLAIMING</span>
+                    </div>
+                </div>
+                <div class="styling-tab-container tab-instance">
+                    <div class="styling-sub-container"></div>
+                </div>
+            </div>
+            <div class="folder-container">
+                
+            </div>
+            
+        </div>
+
+            <form action="{% url 'shop_logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+            </form>
+        
+    </body>
+
+    <script>
+        document.getElementById('printing-tab').addEventListener('click', function() {
+            document.getElementById('printing-link').click();
+        });
+        document.getElementById('payment-tab').addEventListener('click', function() {
+            document.getElementById('payment-link').click();
+        });
+    </script>
+</html>

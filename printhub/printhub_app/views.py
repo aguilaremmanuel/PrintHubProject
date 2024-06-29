@@ -30,13 +30,44 @@ def main_page (request):
 def shop_dashboard(request):
     shop_id = request.session.get('shop_id')
     if shop_id:
+
+        folder_details = []
+
         folders = ShopFolder.objects.filter(folder_id=shop_id) 
         
         hasNoShopRate = request.session.get('raise_no_shop_rate')
+
+        for folder in folders:
+
+            for_payment = 0
+            for_printing = 0
+            for_claiming = 0
+            
+            user_folders = UserFolder.objects.filter(folder_parent=folder)
+
+            for user_folder in user_folders:
+                if user_folder.status == 'for payment':
+                    for_payment = for_payment + 1
+                elif user_folder.status == 'for printing':
+                    for_printing = for_printing + 1
+                elif user_folder.status == 'for claming':
+                    for_claiming = for_claiming + 1
+            
+
+            folder_detail = {
+                'folder_name' : folder.name,
+                'for_payment' : for_payment,
+                'for_printing' : for_printing,
+                'for_claiming' : for_claiming
+            }
+            folder_details.append(folder_detail)
+
+        print("details is: ", folder_details)
         if hasNoShopRate:
             del request.session['raise_no_shop_rate']
-            return render(request, 'shop/shop-dashboard.html', {'folders': folders, 'raiseNoShopRate': True})
-        return render(request, 'shop/shop-dashboard.html', {'folders': folders})
+            return render(request, 'shop/shop-dashboard.html', {'folder_details': folder_details, 'raiseNoShopRate': True})
+        
+        return render(request, 'shop/shop-dashboard.html', {'folder_details': folder_details})
     return redirect('shop_login')  
 
 def shop_login(request):
@@ -162,6 +193,15 @@ def shop_edit_price(request):
         shop_rate.save()
 
         return redirect('shop_prices')
+
+def shop_payment(request):
+    return render(request, 'shop/shop-payment.html')
+
+def shop_printing(request):
+    return render(request, 'shop/shop-printing.html')
+
+def shop_claiming(request):
+    return render(request, 'shop/shop-claiming.html')
 
 def shop_logout(request):
     if 'shop_id' in request.session:

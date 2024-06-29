@@ -10,7 +10,10 @@ urlpatterns = [
     path('shop/dashboard/create-folder/', views.shop_create_folder, name="shop_create_folder"),
     path('shop/dashboard/prices/', views.shop_prices, name="shop_prices"),
     path('shop/dashboard/editing-price', views.shop_edit_price, name="shop_edit_price"),
-    
+    path('shop/dashboard/payment', views.shop_payment, name='shop_payment'),
+    path('shop/dashboard/printing', views.shop_printing, name='shop_printing'),
+    path('shop/dashboard/claiming', views.shop_claiming, name='shop_claiming'),
+
     path('user/signup/', views.user_signup, name='user_signup'),            # user signup page
     path('user/login/', views.user_login, name='user_login'),               # user login page
     path('user/logout/', views.user_logout, name='user_logout'),            # user logout page

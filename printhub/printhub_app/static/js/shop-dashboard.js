@@ -41,6 +41,9 @@ document.getElementById("cancel-btn").addEventListener("click", function() {
     document.getElementById("create-folder-modal").style.display = "none";
 });
 
+document.querySelector('.folder-container-instance').addEventListener('click', function() {
+    document.getElementById('payment-link').click();
+});
 
 
 

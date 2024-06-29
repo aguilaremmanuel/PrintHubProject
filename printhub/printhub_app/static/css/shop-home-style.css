@@ -90,8 +90,12 @@
     color: rgb(20, 233, 20);
 }
 
-.folder-container {
+.folder-container-instance {
     cursor: pointer;
+}
+
+.folder-container-instance a {
+    display: none;
 }
 
 .folder-container-instance:hover {

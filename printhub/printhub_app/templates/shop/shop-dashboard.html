@@ -62,15 +62,17 @@
                 <div class="action-container"><i class="fa-solid fa-ellipsis-vertical folder-txt-title"></i></div>
             </div>
 
-            {% for folder in folders %}
+            {% for folder_detail in folder_details %}
+                
                 <div class="folder-titles folder-container-instance">
-                    <div class="name-container"><i class="fa-solid fa-folder"></i><span>{{ folder.name }}</span></div>
-                    <div class="payment-container"><i class="fa-solid fa-users"></i><span>0</span></div>
-                    <div class="printing-container"><i class="fa-solid fa-users"></i><span>0</span></div>
-                    <div class="claiming-container"><i class="fa-solid fa-users"></i><span>0</span></div>
-                    <div class="action-container ellipsis" ><i class="fa-solid fa-ellipsis-vertical"></i>
-                    </div>
+                    <div class="name-container"><i class="fa-solid fa-folder"></i><span>{{ folder_detail.folder_name }}</span></div>
+                    <div class="payment-container"><i class="fa-solid fa-users"></i><span>{{ folder_detail.for_payment }}</span></div>
+                    <div class="printing-container"><i class="fa-solid fa-users"></i><span>{{ folder_detail.for_printing }}</span></div>
+                    <div class="claiming-container"><i class="fa-solid fa-users"></i><span>{{ folder_detail.for_claiming }}</span></div>
+                    <div class="action-container ellipsis" ><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                    <a href="{% url 'shop_payment' %}" id="payment-link"></a>
                 </div>
+                
             {% endfor %}
 
             {% if raiseNoShopRate == True %}

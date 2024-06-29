@@ -1,0 +1,37 @@
+.tab-instance.current-tab {
+    background-color: #5E7699;
+    border-top-right-radius: 50px;
+}
+
+.tab-instance.current-tab i {
+    margin-left: 30px;
+    color: #FFF500;
+    opacity: 100%;
+}
+
+.tab-instance.styling {
+    background-color: #5E7699;
+}
+
+.printing-sub-background {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    border-bottom-left-radius: 30px;
+}
+
+.printing-items-container, .claiming-items-container {
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    border-right: 3px solid #5E7699;
+    width: 100%;
+    height: 50px;
+}
+
+.printing-sub-background:hover, .claiming-tab-container:hover{
+    background-color: rgb(241, 238, 238);
+}
+

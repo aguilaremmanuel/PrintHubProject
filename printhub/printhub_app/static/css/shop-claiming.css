@@ -1,0 +1,62 @@
+.printing-tab-container {
+    background-color: #5E7699;
+}
+
+.printing-sub-background {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    border-bottom-right-radius: 30px;
+    padding-left: 30px;
+}
+
+.claiming-sub-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #5E7699;
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+}
+
+.styling-tab-container {
+    background-color: #5E7699;
+}
+
+.styling-sub-container {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    border-bottom-left-radius: 30px;
+}
+
+.payment-items-container {
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    border-right: 3px solid #5E7699;
+    width: 100%;
+    height: 50px;
+}
+
+.payment-tab-container i {
+    color: #FFF500;
+}
+
+.claiming-tab-container span {
+    margin-left: 10px;
+    opacity: 100%;
+}
+
+.claiming-tab-container i {
+    opacity: 100%;
+}
+
+.payment-tab-container:hover, 
+.printing-sub-background:hover {
+    background-color: rgb(241, 238, 238);
+}
