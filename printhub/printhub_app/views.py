@@ -10,8 +10,20 @@ from django.http import JsonResponse
 import json
 from django.urls import reverse
 
+def faqs_page (request):
+    return render(request, 'faqs.html')
+
+def contact_page (request):
+    return render(request, 'contact.html')
+
+def pricing_page (request):
+    return render(request, 'pricing.html')
+
 def main_page (request):
     return render(request, 'main-page.html')
+
+def about_page (request):
+    return render(request, 'about.html')
 
 def shop_dashboard(request):
     shop_id = request.session.get('shop_id')
@@ -289,11 +301,8 @@ def user_upload_file(request):
         except UserFolder.DoesNotExist:
             UserFolder.objects.create(folder_parent=shop_folder, user=user)
 
-        file_parent = user_folder.user_folder_no
+        #file_parent = user_folder.user_folder_no
 
-        try:
-            
-        
 
         return render(request, 'user/user-upload-files.html', {'user_folder_no':user_folder.user_folder_no})
     elif int(shop_folder_count) > 1:

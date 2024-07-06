@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'printhub_app',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -82,9 +83,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db_printhub',
         'USER': 'root',
-        'PASSWORD': 'emm@N2020',
+        'PASSWORD': '4113.Franzel',
         'HOST': 'localhost',
-        'PORT': '3306',
+        'PORT': '3307',
     }
 }
 

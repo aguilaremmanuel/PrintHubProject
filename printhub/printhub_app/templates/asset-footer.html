@@ -1,0 +1,48 @@
+{% load static %}
+
+<footer>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-2 mt-5 mb-4">
+            <div class="col-md-4 my-3 text-center text-md-start d-flex flex-column align-items-center align-items-md-start">
+                <img src="/static/images/logo2-white.png" alt="PrintHub" width="auto" height="18%">
+                <p class="text-subheading text-light mt-2 w-100 text-center text-md-start">Your Reliable Printing Partner</p>
+            </div>
+            
+            <div class="col-md-2 my-3">
+                <h5 class="text-subheading text-light mb-3">Learn More</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item my-2"><a href="{% url 'about_page'%}" class="nav-link p-0 text-light">About</a></li>
+                    <li class="nav-item my-2"><a href="{% url 'pricing_page'%}" class="nav-link p-0 text-light">Pricing</a></li>
+                    <li class="nav-item my-2"><a href="{% url 'contact_page'%}" class="nav-link p-0 text-light">Contact</a></li>
+                    <li class="nav-item my-2"><a href="{% url 'faqs_page'%}" class="nav-link p-0 text-light">FAQs</a></li>
+                </ul>
+            </div>
+        
+            <div class="col-md-2 my-3">
+                <h5 class="text-subheading text-light mb-3">Quick Links</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item my-2"><a href="{% url 'main_page'%}" class="nav-link p-0 text-light">Home</a></li>
+                    <li class="nav-item my-2"><a href="" class="nav-link p-0 text-light">User Portal</a></li>
+                    <li class="nav-item my-2"><a href="" class="nav-link p-0 text-light">Partner Shop Portal</a></li>
+                </ul>
+            </div>
+        
+            <div class="col-md-4 my-3">
+                <h5 class="text-subheading text-light mb-3">Get In Touch</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item my-2">
+                        <p class="fw-normal">For inquiries or assistance, reach out to us at:</p>
+                        <a class="nav-link p-0 text-light my-2" href="mailto:print.hub@gmail.com"><i class="fa-solid fa-envelope"></i> printhub@gmail.com</a>
+                        <a class="nav-link p-0 text-light" href="tel:+0123456789"><i class="fa-solid fa-phone"></i> 01-2345-6789</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="d-flex flex-wrap justify-content-between align-items-center py-4 border-top">
+          <p class="col-md-6 my-2 text-start fw-normal">&copy; 2024 PrintHub</p>
+          <p class="col-md-6 my-2 text-end fw-normal">Website by BSIT 3-2 Group 1 </p>
+        </div>
+    </div>     
+</footer>

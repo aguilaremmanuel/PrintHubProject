@@ -1,0 +1,203 @@
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'css/bootstrap5.css' %}" rel="stylesheet">
+        <link href="{% static 'css/main-page-style.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <title>PrintHub — FAQs</title>
+    </head>
+
+    <body>
+        {% include 'asset-navbar.html' %}        
+
+        <section class="faqs">
+            <div class="container py-5">
+                <div class="row">
+                    <h1 class="text-page-heading text-accent mt-5 mb-3">Frequently <span class="text-light">Asked </span>Questions</h1>
+                    <p class="text-light pb-5">We're here to help you! Find quick answers to common questions about our services, pricing, and more.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="faqs-2">
+            <div class="container py-5">
+                <div class="row my-4">
+                    <div class="col-12 col-xl-2"></div>
+                    <div class="col-12 col-xl-8">
+                      <h3 class="card-title text-heading text-dark pb-4">Featured FAQs</h3>                       
+                        <div class="accordion" id="accordionPanelsStayOpenExample">
+                            <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                <button class="accordion-button collapsed text-dark text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                  What is PrintHub?
+                                </button>
+                              </h2>
+                              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse">
+                                <div class="accordion-body text-dark"><p>PrintHub is a comprehensive, web-based platform designed to streamline print shop operations,
+                                    enhance customer engagement, and boost business efficiency. With advanced technology and user-friendly interfaces, 
+                                    PrintHub empowers local printers to efficiently manage orders, track inventory, and deliver products swiftly and 
+                                    accurately.</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                <button class="accordion-button collapsed text-dark text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                  How does PrintHub: Print Management System work?
+                                </button>
+                              </h2>
+                              <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                                <div class="accordion-body text-dark"><p>PrintHub operates through two main portals: the shop portal and the user portal, designed to 
+                                    streamline the printing process for businesses and their customers. The shop portal serves as the backend management 
+                                    system where print shops can efficiently manage incoming orders. It provides tools for shop owners or administrators
+                                    to oversee production schedules, manage inventory, and optimize workflow efficiency.<br><br>
+                                    On the other hand, the user portal provides a user-friendly interface for customers to conveniently place and manage 
+                                    their print orders. Through the user portal, customers can easily upload their files, specify printing preferences 
+                                    such as paper type, size, and quantity, and instantly receive a price quote based on their selections. This 
+                                    streamlined process allows customers to make informed decisions before finalizing their orders, ensuring transparency 
+                                    and satisfaction throughout the printing experience.</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                <button class="accordion-button collapsed text-dark text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                    Is PrintHub suitable for my business?
+                                </button>
+                              </h2>
+                              <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                                <div class="accordion-body text-dark"><p>If you are a printing business looking to streamline your operations, manage orders more efficiently, and enhance 
+                                    customer interaction, PrintHub is designed with your needs in mind. Our platform offers robust tools for managing 
+                                    print jobs, tracking orders, and optimizing workflow, making it ideal for print shops.</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                  <button class="accordion-button collapsed text-dark text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                                    What are the available plans that I can avail for my business?
+                                  </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
+                                  <div class="accordion-body text-dark"><p>We offer three flexible plans to suit your business needs:
+                                    <ul><br>
+                                        <li>Monthly Plan: Ideal for businesses with regular printing needs, providing cost-effective solutions and 
+                                            consistent service on a monthly basis.
+                                        </li>
+                                        <li>Great for businesses looking to balance flexibility and cost savings, offering reliable printing 
+                                            services every three months.
+                                        </li>
+                                        <li>Best for long-term planning and budgeting, ensuring stable and reliable printing services throughout
+                                            the year with added savings.
+                                        </li>
+                                    </ul>
+                                  </p>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                  <button class="accordion-button collapsed text-dark text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSeven" aria-expanded="false" aria-controls="panelsStayOpen-collapseSeven">
+                                    How can I avail PrintHub for my printing business?
+                                </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseSeven" class="accordion-collapse collapse">
+                                  <div class="accordion-body text-dark"><p>Availing PrintHub for your printing business is easy. Simply send us a message 
+                                    through our contact form on the website or give us a call. Our team will guide you through the process, answer any 
+                                    questions you may have, and help you set up the system tailored to your business needs. We're here to ensure a smooth 
+                                    transition and provide ongoing support as you integrate PrintHub into your operations.</p>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                  <button class="accordion-button collapsed text-dark text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="false" aria-controls="panelsStayOpen-collapseSix">
+                                    How do I set up an account in the PrintHub shop portal?                                  
+                                  </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse">
+                                  <div class="accordion-body text-dark"><p>Setting up an account in the PrintHub shop portal is a straightforward process 
+                                    designed to get your print shop up and running efficiently. First, sign up by providing your business details and 
+                                    creating a secure login. Once registered, you can define your printing rates based on print type, if colored or 
+                                    black and white, and paper size to ensure accurate pricing for your customers. Next, organize your workflow by 
+                                    creating folders where your customers can upload their files. With these steps, you'll be ready to handle incoming 
+                                    orders seamlessly and optimize your shop's productivity.</p>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                  <button class="accordion-button collapsed text-dark text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseNine" aria-expanded="false" aria-controls="panelsStayOpen-collapseNine">
+                                    How can my customers set up an account in the PrintHub user portal?
+                                  </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseNine" class="accordion-collapse collapse">
+                                  <div class="accordion-body text-dark"><p>Setting up an account in the PrintHub user portal is simple and ensures 
+                                    seamless management of print orders. Customers can begin by signing up on the portal, providing essential details 
+                                    such as their name, email address, and password. Once registered, they can connect with their preferred print shop 
+                                    by entering a unique code provided by the shop. This code facilitates a secure connection, allowing customers to 
+                                    upload files, specify print preferences, and track their orders conveniently.</p>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                  <button class="accordion-button collapsed text-dark text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
+                                    What file formats does PrintHub accept for printing?
+                                </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse">
+                                  <div class="accordion-body text-dark"><p>We accept various file formats such as PDF, JPEG, PNG, and DOCX to ensure the 
+                                    best print quality.
+                                  </p>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                  <button class="accordion-button collapsed text-dark text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseEight" aria-expanded="false" aria-controls="panelsStayOpen-collapseEight">
+                                    Can my customers track the status of their print orders through the user portal?
+                                </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseEight" class="accordion-collapse collapse">
+                                  <div class="accordion-body text-dark"><p>Yes, customers can easily track the status of their print orders through the 
+                                    user portal. Once an order is placed, they can monitor progress through different stages: payment processing, 
+                                    printing in progress, and order ready for claiming. This feature ensures transparency and keeps customers informed 
+                                    at every step of the printing process.</p>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                  <button class="accordion-button collapsed text-dark text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTen" aria-expanded="false" aria-controls="panelsStayOpen-collapseTen">
+                                    How can I provide feedback about my experience with PrintHub?                                  
+                                  </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseTen" class="accordion-collapse collapse">
+                                  <div class="accordion-body text-dark"><p>We value your feedback. You can provide feedback directly on our email, 
+                                    or via our phone number. Your insights help us improve our services and better meet your needs.</p>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-2"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="footer-div"></section>
+
+        {% include 'asset-footer.html' %}        
+    </body>
+</html>

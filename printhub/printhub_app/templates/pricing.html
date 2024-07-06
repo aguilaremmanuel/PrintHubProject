@@ -1,0 +1,85 @@
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'css/bootstrap5.css' %}" rel="stylesheet">
+        <link href="{% static 'css/main-page-style.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <title>PrintHub — Pricing</title>
+    </head>
+
+    <body>
+        {% include 'asset-navbar.html' %}        
+
+        <section class="pricing">
+            <div class="container py-5">
+                <div class="row">
+                    <h1 class="text-page-heading text-accent mt-5 mb-3">Find the <span class="text-light">Perfect Plan </span>For You</h1>
+                    <p class="text-light pb-5">Choose from our flexible weekly, monthly, and yearly plans to find the perfect fit for your business needs.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="pricing-2">
+            <div class="container py-4">
+                <div class="row my-5 gx-5">
+                    <div class="col-12 col-lg-4 py-3">
+                        <div class="card" style="width: auto;">
+                            <img src="/static/images/monthly.png" class="card-img-top" alt="Monthly Plan">
+                            <div class="card-body p-4">
+                                <h3 class="card-title text-heading text-dark pb-3">Monthly Plan</h3>                       
+                                <h1 class="card-title text-heading text-accent text-center pb-3">₱ 1,500</h1>                              
+                                <p class="card-text text-dark pb-3">Ideal for businesses with regular printing needs, providing cost-effective 
+                                    solutions and consistent service on a monthly basis.</p>
+                                <div class="mb-1">
+                                    <a href="{% url 'contact_page'%}"><button class="btn-accent text-light mt-2" style="width: 100%;">Buy Monthly Plan</button></a>
+                                </div>                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 py-3">                              
+                        <div class="card" style="width: auto;">
+                            <img src="/static/images/quarterly.png" class="card-img-top" alt="Quarterly Plan">
+                            <div class="card-body p-4">
+                                <h3 class="card-title text-heading text-dark pb-3">Quarterly Plan</h3>                       
+                                <h1 class="card-title text-heading text-accent text-center pb-3">₱ 5,500</h1>                              
+                                <p class="card-text text-dark pb-3">Great for businesses looking to balance flexibility and cost savings, offering 
+                                    reliable printing services every three months.</p>
+                                <div class="mb-1">
+                                    <a href="{% url 'contact_page'%}"><button class="btn-accent text-light mt-2" style="width: 100%;">Buy Quarterly Plan</button></a>
+                                </div>                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 py-3">                              
+                        <div class="card" style="width: auto;">
+                            <img src="/static/images/yearly.png" class="card-img-top" alt="Yearly Plan">
+                            <div class="card-body p-4">
+                                <h3 class="card-title text-heading text-dark  pb-3">Yearly Plan</h3>                       
+                                <h1 class="card-title text-heading text-accent text-center pb-3">₱ 12,500</h1>  
+                                <p class="card-text text-dark pb-3">Best for long-term planning and budgeting, ensuring stable and reliable 
+                                printing services throughout the year with added savings.</p>
+                                <div class="mb-1">
+                                    <a href="{% url 'contact_page'%}"><button class="btn-accent text-light mt-2" style="width: 100%;">Buy Yearly Plan</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="footer-div"></section>
+
+        {% include 'asset-footer.html' %}        
+    </body>
+</html>

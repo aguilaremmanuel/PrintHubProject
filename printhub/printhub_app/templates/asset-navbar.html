@@ -1,0 +1,50 @@
+{% load static %}
+
+<header>
+    <nav class="navbar navbar-expand-xl bg-body-tertiary fixed-top">
+        <div class="container">
+            <!-- LOGO -->
+            <a class="navbar-brand fs-4">
+                <img src="{% static 'images/logo1-dark.png' %}" alt="Logo" height="35">
+            </a>
+    
+            <!-- TOGGLE BUTTON -->
+            <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon align-middle"><i class="fa-solid fa-bars"></i></span>
+            </button>
+    
+            <!-- SIDEBAR -->  
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    
+                <!-- SIDEBAR HEADER -->  
+                <div class="offcanvas-header border-bottom">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" href="{% url 'main_page'%}">Home</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="{% url 'about_page'%}">About</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="{% url 'pricing_page'%}">Pricing</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="{% url 'contact_page'%}">Contact</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="{% url 'faqs_page'%}">FAQs</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex justify-content-center align-items-center gap-3">
+                        <a href=""><button class="btn-accent text-light">User Portal</button></a>
+                        <a href=""><button class="btn-hollow">Partner Shop Portal</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
