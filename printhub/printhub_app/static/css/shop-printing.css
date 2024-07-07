@@ -62,3 +62,355 @@
 .claiming-sub-container:hover {
     background-color: rgb(241, 238, 238);
 }
+
+.folder-container {
+    padding: 30px 100px;
+}
+
+.title-header-container {
+    display: flex;
+    width: 100%;
+    background-color: #D9D9D9;
+    height: 50px;
+    opacity: 65%;
+}
+
+.title-header-container > * {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.title-header-container .no {
+    width: 12%;
+}
+
+.title-header-container .customer-name {
+    width: 58%;
+}
+
+.title-header-container .mark-as-done {
+    width: 20%;
+}
+
+.title-header-container .icon-title {
+    width: 10%;
+    padding: 0;
+}
+
+.mark-as-done, .icon-title {
+    justify-content: center;
+}
+
+.folder-printing-container {
+    width: 100%;
+    height: 430px;
+    margin-top: 20px;
+    overflow-y: auto;
+}
+
+.customer-instance-container {
+    display: flex;
+    width: 100%;
+    height: 60px;
+    margin-bottom: 10px;
+}
+
+.no-container {
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    width: 12%;
+    font-size: 17px;
+}
+
+.folder-instance-container {
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    position: relative;
+    width: 88%;
+    background-color: #DBE0FA;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.mark-as-done-btn {
+    padding: 10px 20px;
+    position: absolute;
+    background-color: #0B6DFF;
+    right: 14%;
+    top: 20%;
+    border-radius: 5px;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.mark-as-done-btn:hover {
+    background-color: #0b5cd7;
+}
+
+.folder-action-container {
+    position: absolute;
+    padding: 10px 18px;
+    border-radius: 50%;
+    font-size: 16px;
+    right: 3%;
+    top: 15%;
+    cursor: pointer;
+}
+
+.folder-action-container:hover {
+    background-color: #bed7fc;
+}
+
+.fa-folder-open {
+    color: #0B6DFF;
+    margin-right: 10px;
+}
+
+.customer-name-txt {
+    font-size: 15px;
+}
+
+.folder-printing-container .customer-instance-container:first-child {
+    height: 80px;
+}
+
+.folder-printing-container .customer-instance-container:first-child .folder-instance-container{
+    border: 2px solid #84b1f6;
+}
+
+.folder-printing-container .customer-instance-container:first-child .no-container{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.folder-printing-container .customer-instance-container:first-child .fa-folder-open {
+    font-size: 20px;
+}
+
+.folder-printing-container .customer-instance-container:first-child .customer-name-txt {
+    font-size: 18px;
+}
+
+.folder-printing-container .customer-instance-container:first-child .mark-as-done-btn{
+    top: 27%;
+}
+
+.folder-printing-container .customer-instance-container:first-child .folder-action-container{
+    top: 25%;
+}
+
+.fa-arrow-left-long {
+    font-size: 30px;
+    font-weight: bold;
+    background-color:#5E7699;
+    color: white;
+    cursor: pointer;
+    padding: 5px 15px;
+    padding-right: 20px;
+    border-radius: 50px;
+}
+
+.fa-arrow-left-long:hover{
+    background-color: #4e607b;
+}
+
+.file-header, .file-to-print-instance {
+    display: flex;
+    opacity: 50%;
+    padding: 10px 25px;
+    border-bottom: 2px solid rgb(227, 226, 226);
+}
+
+.file-header .file-name-txt,
+.file-to-print-instance .file-name{
+    padding-right: 20px;
+    width: 35%;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide the overflow text */
+    text-overflow: ellipsis;
+}
+
+.file-header .details-txt,
+.file-to-print-instance .file-details{
+    width: 35%;
+}
+
+.file-header .action-txt,
+.file-to-print-instance .file-action{
+    width: 30%;
+}
+
+.file-to-print-container{
+    height: 340px;
+    overflow-y: auto;
+}
+
+.file-to-print-instance {
+    padding: 15px 25px;
+    opacity: 1;
+}
+
+.file-to-print-instance .file-action{
+    display: flex;
+    position: relative;
+}
+
+.file-to-print-instance .fa-file-word,
+.fa-eye {
+    color: #0b5cd7;
+}
+
+.file-to-print-instance .fa-file-pdf {
+    color: red;
+}
+
+.file-to-print-instance .file-name i{
+    margin-right: 10px;
+}
+
+.fa-eye {
+    margin-right: 5px;
+} 
+
+.view-btn {
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.print-btn {
+    position: absolute;
+    padding: 8px 20px;
+    background-color: #0B6DFF;
+    border-radius: 5px;
+    cursor: pointer;
+    top: -9px;
+    left: 80px;
+}
+
+.print-btn:hover {
+    background-color: #0e4eae;
+}
+
+.print-btn span, .print-btn i,
+.print-btn .fa-print{
+    font-size: 15px;
+    color: white
+}
+
+.print-btn .fa-print {
+    margin-right: 7px;
+}
+
+.file-action {
+    position: relative;
+}
+
+.file-action .fa-ellipsis-vertical {
+    position: absolute;
+    font-size: 20px;
+    top: -10px;
+    right: -4%;
+    padding: 10px 18px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.file-action .fa-ellipsis-vertical:hover {
+    background-color: #c4dafc;
+}
+
+.file-action .fa-lock,
+.file-action .fa-download {
+    position: absolute;
+    top: 14%;
+    right: 22%;
+    font-size: 17px;
+    color:#4e607b;
+    cursor: pointer;
+}
+
+.file-action .fa-lock:hover,
+.file-action .fa-download:hover {
+    color:#364253;
+}
+
+.file-view-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items:last baseline;
+}
+
+.file-view-panel {
+    width: 50vw;
+    height: 95vh;
+    background-color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.file-view-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px;
+    border-bottom: 1px solid rgb(219, 217, 217);
+}
+
+.file-view-name {
+    display: flex;
+    max-width: 80%;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide the overflow text */
+    text-overflow: ellipsis;
+} 
+
+.file-view-name i {
+    display: none;
+    margin-right: 8px;
+}
+
+.file-view-name .fa-file-word {
+    color: blue;
+}
+.file-view-name .fa-file-pdf {
+    color: red;
+}
+
+.file-view-close {
+    font-size: 14px;
+    position: absolute;
+    padding: 5px 13px;
+    border: 2px solid rgb(219, 217, 217);
+    border-radius: 4px;
+    cursor: pointer;
+    right: 30px;
+    top: 17px;
+    opacity: 85%;
+}
+
+.file-view-close:hover {
+    background-color: rgb(241, 235, 235);
+}
+
+.file-view-pages-container {
+    width: 100%;
+    height: 91%;
+    overflow-y: auto;
+}
+
+.file-view-pages-container img {
+    width: 100%;
+    border-bottom: 1px solid rgb(176, 174, 174);
+}

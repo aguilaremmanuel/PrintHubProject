@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="{% static 'css/generic-style.css' %}" rel="stylesheet">
         <link href="{% static 'css/user-upload-files-style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/user-generic-navigation.css' %}" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <title>Welcome to PrintHub!</title>
         
@@ -18,7 +19,11 @@
 
             <div class="navigation">
                 <div class="menu-icon-container">
-                    <i class="fa-solid fa-bars"></i>
+                    <i class="fa-solid fa-bars" id="menuIcon"></i>
+                </div>
+                <div class="menu-link-container">
+                    <a href="{% url 'user_dashboard' %}" class="home-link"><i class="fa-solid fa-house"></i>Home</a> 
+                    <a href="{% url 'user_logout' %}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
                 </div>
             </div>
 
@@ -409,5 +414,6 @@
             document.querySelector('.add-file-modal').style.display = "none";
         });
     </script>
+    <script src="{% static 'js/user-menu.js' %}"></script>
 
 </html>

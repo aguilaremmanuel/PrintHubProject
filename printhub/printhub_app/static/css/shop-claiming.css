@@ -60,3 +60,58 @@
 .printing-sub-background:hover {
     background-color: rgb(241, 238, 238);
 }
+
+.folder-container {
+    padding: 30px 100px;
+}
+
+.header-claiming-title, .claiming-folder-instance {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    opacity: 65%;
+    border-bottom: 2px solid rgb(234, 227, 227);
+}
+
+.header-claiming-title > *, .claiming-folder-instance > * {
+    padding-left: 20px;
+}
+
+.header-claiming-title .no, .claiming-folder-instance .no{
+    width: 10%;
+}
+
+.header-claiming-title .customer-name,
+.claiming-folder-instance .customer-name{
+    width: 60%;
+}
+
+.header-claiming-title .mark-as-claimed,
+.claiming-folder-instance .mark-as-claimed{
+    width: 30%;
+}
+
+.claiming-folder-instance {
+    opacity: 1;
+}
+
+.mark-as-claimed-btn {
+    display: flex;
+    justify-content: center;
+    background-color:#0B6DFF;
+    font-size: 14px;
+    color: white;
+    width: 160px;
+    padding: 9px 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.mark-as-claimed-btn:hover {
+    background-color:rgb(8, 58, 132);
+}
+
+.mark-as-claimed a {
+    text-decoration: none;
+}

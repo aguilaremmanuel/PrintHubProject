@@ -1,0 +1,31 @@
+.navigation {
+    position: relative;
+}
+
+.menu-link-container {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 160px;
+    background-color: white;
+    border: 2px solid rgb(246, 239, 239);
+    z-index: 200;
+    padding: 20px 30px;
+}
+
+.menu-link-container a {
+    display: block;
+    text-decoration: none;
+    color: #0B6DFF;
+    font-size: 17px;
+}
+
+.menu-link-container i {
+    color:#0B6DFF;
+    font-size: 17px;
+    margin-right: 5px;
+}
+
+.menu-link-container .home-link {
+    margin-bottom: 70px;
+}

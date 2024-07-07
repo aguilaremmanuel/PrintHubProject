@@ -3,12 +3,39 @@ from .models import *
 from django.core.exceptions import ValidationError
 
 class ShopSignupForm(forms.ModelForm):
-    confirm_password = forms.CharField(widget=forms.PasswordInput())
+
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control', 
+            'id': 'formGroupExampleInput',
+            'placeholder': 'Confirm Password',
+        })
+    )
+
     class Meta:
         model = Shop
         fields = ['shop_name', 'fullname', 'email', 'contact_no', 'password', 'date_registered']
         widgets = {
-            'password': forms.PasswordInput(),
+            'shop_name': forms.TextInput(attrs={
+                            'class': 'form-control',
+                            'id': 'formGroupExampleInput',
+                            'placeholder': 'Enter Shop Name'}),
+            'fullname': forms.TextInput(attrs={
+                            'class': 'form-control', 
+                            'id': 'formGroupExampleInput',
+                            'placeholder': 'Owner\'s Name'}),
+            'email': forms.EmailInput(attrs={
+                            'class': 'form-control', 
+                            'id': 'formGroupExampleInput',
+                            'placeholder': 'Email'}),
+            'contact_no': forms.TextInput(attrs={
+                            'class': 'form-control', 
+                            'id': 'formGroupExampleInput',
+                            'placeholder': 'Contact Number'}),
+            'password': forms.PasswordInput(attrs={
+                            'class': 'form-control', 
+                            'id': 'formGroupExampleInput',
+                            'placeholder': 'Password'}),
         }
 
     def clean(self):

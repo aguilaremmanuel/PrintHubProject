@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'css/generic-style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/user-payment-style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/user-printing-status.css' %}" rel="stylesheet">
+        <link href="{% static 'css/user-generic-navigation.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <title>Payment!</title>
+        
+    </head>
+
+    <body>
+        
+        <div class="main-container">
+
+            <div class="navigation">
+                <div class="menu-icon-container">
+                    <i class="fa-solid fa-bars" id="menuIcon"></i>
+                </div>
+                <div class="menu-link-container">
+                    <a href="{% url 'user_dashboard' %}" class="home-link"><i class="fa-solid fa-house"></i>Home</a> 
+                    <a href="{% url 'user_logout' %}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+                </div>
+            </div>
+
+            <div class="center-container">
+                <div class="tracking-container">
+                    <div class="line-tracker"><div class="line finished-line"></div><div class="line finished-line"></div></div>
+                    <div class="upload-file-state state finished-state"><i class="fa-solid fa-check"></i> </div>
+                    <div class="payment-state state finished-state"><i class="fa-solid fa-check"></i></div>
+                    <div class="printing-status-state state current-state"><div class="white-circle"></div></div>
+                </div>
+            </div>
+            
+            <div class="center-container">
+                <div class="tracking-labels-container">
+                    <span class="current-state-label">Upload Files</span>
+                    <span class="current-state-label">Payment</span>
+                    <span class="current-state-label">Printing Status</span>
+                </div>
+            </div>
+            <div class="user_folder_no" data-id='{{user_folder_no}}' style="display: none;"></div>
+            <div class="center-printing-status-container">
+                <div class="printing-status-container">
+                    
+                    <div class="awaiting-for-printing-container" id="awaiting-for-printing-container">
+                        <i class="fa-solid fa-user-clock"></i>
+                        <p class="first-message">Awaiting for Printing...</p>
+                        <p class="last-message">Your documents is now awaiting for printing.</p>
+                    </div>
+
+                    <div class="now-printing-container" id="now-printing-container">
+                        <i class="fa-solid fa-print"></i>
+                        <p class="first-message">Now Printing...</p>
+                        <p class="last-message">Your documents is now printing.</p>
+                    </div>
+
+                    <div class="for-claiming-container" id="for-claiming-container">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <p class="first-message">For Claiming</p>
+                        <p class="last-message">Your documents has finished printing. You can now claimed it at the counter.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+             $(document).ready(function() {
+                // Retrieve the file ID from the data-id attribute
+                var user_folder_no = $('.user_folder_no').data('id');
+                setInterval(function() {
+                    checkPrintingStatus(user_folder_no);
+                }, 1000);  // Check every 3 seconds
+            });
+
+            function checkPrintingStatus(user_folder_no) {
+                $.ajax({
+                    url: '/check_printing_status/' + user_folder_no + '/',
+                    method: 'GET',
+                    success: function(data) {
+                        if (data.status === "for printing") {
+                            $('#now-printing-container').hide();
+                            $('#for-claiming-container').hide();
+                            $('#awaiting-for-printing-container').show();
+                        } else if(data.status === "printing"){
+                            $('#awaiting-for-printing-container').hide();
+                            $('#for-claiming-container').hide();
+                            $('#now-printing-container').show();
+                        } else {
+                            $('#awaiting-for-printing-container').hide();
+                            $('#now-printing-container').hide();
+                            $('#for-claiming-container').show();
+                        }
+                    }
+                });
+            }
+        </script>
+        <script src="{% static 'js/user-menu.js' %}"></script>
+
+
+    </body>
+</html>

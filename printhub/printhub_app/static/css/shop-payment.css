@@ -35,3 +35,153 @@
     background-color: rgb(241, 238, 238);
 }
 
+.folder-container {
+    padding: 30px 100px;
+}
+/*
+.folder-container table {
+    border-collapse:collapse;
+    width: 100%;
+}
+
+table th {
+    text-align: left;
+    height: 50px;
+    background-color: #D9D9D9;
+    opacity: 65%;
+    font-weight: 100;
+}
+
+table th:nth-child(1),
+table td:nth-child(1) {
+    width: 100px;
+}
+
+table th:nth-child(2),
+table td:nth-child(2) {
+    width: 350px;
+}
+
+table th:nth-child(3),
+table td:nth-child(3) {
+    width: 240px;
+}
+
+table th:nth-child(4),
+table td:nth-child(4) {
+    width: 170px;
+    text-align: center;
+}
+table th:nth-child(5),
+table td:nth-child(5) {
+    width: 60px;
+    text-align: center;
+}
+
+.customer-instance {
+    height: 100px;
+    background-color: pink;
+}
+*/
+
+.folder-container .header {
+    display: flex;
+    width: 100%;
+    background-color: #D9D9D9;
+    opacity: 65%;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.folder-container .header > * {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.header .no-title, .customer-instance .no {
+    width: 10%;
+}
+
+.header .name-title, .customer-instance .name {
+    width: 30%;
+}
+
+.header .price-title, .customer-instance .price {
+    width: 30%;
+}
+
+.header .paid-title, .customer-instance .paid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    padding:0;
+}
+
+.header .icon-title, .customer-instance .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    width: 10%;
+}
+
+.customer-instance-container {
+    height: 420px;
+    overflow-y: auto;
+}
+
+.customer-instance:nth-child(odd) {
+    background-color: #DBE0FA;
+}
+
+/* Style even .customer-instance elements with a yellow background */
+.customer-instance:nth-child(even) {
+    background-color: #A6C9FF;
+}
+
+.customer-instance {
+    display: flex;
+    align-items: center;
+    height: 80px;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.customer-instance > * {
+    padding-left: 20px;
+}
+
+.customer-instance .fa-user {
+    font-size: 23px;
+    opacity: 70%;
+    margin-right: 15px;
+}
+
+.customer-instance .price {
+    font-weight: bold;
+    color: #6B6705;
+    font-size: 21px;
+}
+
+.paid-btn {
+    padding: 10px 30px;
+    background-color: #039D1B;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.paid-btn:hover {
+    background-color: #037d15;
+}
+
+.customer-instance .fa-ellipsis-vertical {
+    font-size: 20px;
+}
+
+.customer-instance a {
+    text-decoration: none;
+}

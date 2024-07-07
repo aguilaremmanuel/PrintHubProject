@@ -23,13 +23,49 @@ body {
 }
 
 .profile-container {
+    position: relative;
     display: flex;
     justify-content: right;
     align-items: center;
     padding: 20px 5px;
+    z-index: 100;
 }
 
-.profile-container i {
+#profileIcon:hover {
+    color: #05419b;
+}
+
+.logout-container {
+    display: none;
+    position: absolute;
+    bottom: -40px;
+    width: 170px;
+    height: 50px;
+    background-color: white;
+    border: 1px solid rgb(229, 222, 222);
+    border-radius: 5px;
+}
+
+.logout-btn {
+    width: 100%;
+    text-align: right;
+    padding: 12px 20px;
+    opacity: 70%;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+}
+
+.logout-btn span {
+    margin-left: 5px;
+}
+
+.logout-btn:hover{
+    color:#0B6DFF;
+}
+
+.profile-container .fa-circle-user {
     font-size: 35px;
     color: #0B6DFF;
     margin-left: 10px;

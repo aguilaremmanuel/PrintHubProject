@@ -20,7 +20,7 @@
             <img src="{% static 'images/logo.png' %}" alt="Company Logo">
 
             <div class="nav-links-container">
-                <a href="#" class="home-link link-hovered"><i class="fa-solid fa-house first-icon icon-hovered"></i> <span class="home-text link-text-hovered">Home</span></a>
+                <a href="{% url 'shop_dashboard' %}" class="home-link"><i class="fa-solid fa-house first-icon"></i> <span class="home-text">Home</span></a>
                 <a href="{% url 'shop_prices' %}"><i class="fa-solid fa-tag"></i><span>Prices</span></a>  
                 <a href="#"><i class="fa-solid fa-user-slash"></i><span>Restricted Users</span></a> 
                 <a href="#"><i class="fa-solid fa-money-check"></i><span>Subscriptions</span></a>
@@ -32,8 +32,15 @@
         <div class="main-panel">
 
             <div class="profile-container">
-                <span>Kween Leng Leng</span> <i class="fa-solid fa-circle-user"></i>
+                <span>Kween Leng Leng</span> <i class="fa-solid fa-circle-user" id="profileIcon"></i>
+                <div class="logout-container">
+                    <form action="{% url 'shop_logout' %}" method="post">
+                    {% csrf_token %}
+                        <button type="submit" class="logout-btn">Log out <span><i class="fa-solid fa-right-from-bracket"></i></span></button>
+                    </form>
+                </div>
             </div>
+
             <div class="tab-container">
                 <div class="payment-tab-container tab-instance current-tab">
                     <i class="fa-solid fa-credit-card"></i> <span>PAYMENT</span>
@@ -46,33 +53,81 @@
                         </div>
                         
                     </div>
-                    <a href="{% url 'shop_printing' %}" id="printing-link"></a>
+                    <a href="{% url 'shop_printing' folder_name folder_no %}" id="printing-link"></a>
                 </div>
                 <div class="claiming-tab-container tab-instance" id="claiming-tab">
                     <div class="claiming-items-container">
                         <i class="fa-solid fa-circle-check"></i><span>CLAIMING</span>
                     </div>
-                    <a href="{% url 'shop_claiming' %}" id="claiming-link"></a>
+                    <a href="{% url 'shop_claiming' folder_name folder_no %}" id="claiming-link"></a>
                 </div>
+
+                <div class="folder-name">{{folder_name}}</div>
+                
             </div>
             <div class="folder-container">
-                
+
+                <div class="header">
+                    <div class="no-title">No.</div>
+                    <div class="name-title">Customer Name</div>
+                    <div class="price-title">To Pay</div>
+                    <div class="paid-title">Mark as Paid</div>
+                    <div class="icon-title"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                </div>
+
+                <div class="customer-instance-container" id="customer-instance-container">
+                    {% include 'partials/for_printing_folders.html' %}
+                </div>
+
             </div>
             
         </div>
-            <form action="{% url 'shop_logout' %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Logout</button>
-            </form>
         
     </body>
 
     <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-links-container a');
+            const icons = document.querySelectorAll('.nav-links-container a i');
+            const linksText = document.querySelectorAll('.nav-links-container a span');
+
+            // Add hover effect to all links except the first one
+            for (let i = 0; i < navLinks.length; i++) {
+                navLinks[i].addEventListener('mouseover', function() {
+                    navLinks[i].classList.add('link-hovered');
+                    icons[i].classList.add('icon-hovered');
+                    linksText[i].classList.add('link-text-hovered');
+                });
+                navLinks[i].addEventListener('mouseout', function() {
+                    navLinks[i].classList.remove('link-hovered');
+                    icons[i].classList.remove('icon-hovered');
+                    linksText[i].classList.remove('link-text-hovered');
+                });
+            }
+        });
+
+
+
         document.getElementById('printing-tab').addEventListener('click', function() {
             document.getElementById('printing-link').click();
         });
         document.getElementById('claiming-tab').addEventListener('click', function() {
             document.getElementById('claiming-link').click();
         });
+        
+        
+
+        function fetchUserFoldersPayment() {
+            fetch("{% url 'update_folders_for_payment' folder_name folder_no %}")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('customer-instance-container').innerHTML = data.html;
+                });
+        }
+
+        setInterval(fetchUserFoldersPayment, 1000);
+
     </script>
+    <script src="{% static 'js/shop-logout.js' %}"></script>
 </html>

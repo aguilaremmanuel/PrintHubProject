@@ -1,0 +1,173 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'css/generic-style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/shop-dashboard-style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/payment-printing-claiming.css' %}" rel="stylesheet">
+        <link href="{% static 'css/shop-printing.css' %}" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <title>PRINTING</title>
+    </head>
+    <body>
+        
+        <div class="navigation">
+            <img src="{% static 'images/logo.png' %}" alt="Company Logo">
+
+            <div class="nav-links-container">
+                <a href="#" class="home-link link-hovered"><i class="fa-solid fa-house first-icon icon-hovered"></i> <span class="home-text link-text-hovered">Home</span></a>
+                <a href="{% url 'shop_prices' %}"><i class="fa-solid fa-tag"></i><span>Prices</span></a>  
+                <a href="#"><i class="fa-solid fa-user-slash"></i><span>Restricted Users</span></a> 
+                <a href="#"><i class="fa-solid fa-money-check"></i><span>Subscriptions</span></a>
+                <a href="#"><i class="fa-solid fa-chart-pie"></i><span>Reports</span></a>
+            </div>
+
+        </div>
+
+        <div class="main-panel">
+
+            <div class="profile-container">
+                <span>Kween Leng Leng</span> <i class="fa-solid fa-circle-user"></i>
+            </div>
+            <div class="tab-container">
+                <div class="payment-tab-container tab-instance" id="payment-tab">
+                    <div class="payment-sub-container">
+                        <i class="fa-solid fa-credit-card"></i> <span>PAYMENT</span>
+                    </div>
+                    <a href="{% url 'shop_payment' folder_name folder_no%}" id="payment-link"></a>
+                </div>
+                <div class="printing-tab-container tab-instance current-tab">
+                    <div class="printing-sub-background">
+                        <i class="fa-solid fa-print"></i><span>PRINTING</span>
+                    </div>
+                </div>
+                <div class="claiming-tab-container tab-instance" id="claiming-tab">
+                    <div class="claiming-sub-container">
+                        <div class="claiming-items-container">
+                            <i class="fa-solid fa-circle-check"></i><span>CLAIMING</span>
+                        </div>
+                    </div>
+                    <a href="{% url 'shop_claiming' folder_name folder_no%}" id="claiming-link"></a>
+                </div>
+                <div class="folder-name">{{folder_name}}</div>
+            </div>
+
+            <div class="folder-container">
+                
+                <a href="{% url 'shop_printing' folder_name folder_no %}"><i class="fa-solid fa-arrow-left-long"></i></a>
+            
+                <h3>Customer Name: {{username}}</h3>
+
+                <div class="file-header">
+                    <div class="file-name-txt">File name</div>
+                    <div class="details-txt">Details</div>
+                    <div class="action-txt">Action</div>
+                </div>
+    
+                <div class="file-to-print-container">
+                    {% for file in file_details %}
+                    <div class="file-to-print-instance">
+                        <div class="file-name">
+                            {% if file.file_type == '.pdf'%}
+                                <i class="fa-solid fa-file-pdf"></i>
+                            {% else %}
+                                <i class="fa-solid fa-file-word"></i>
+                            {% endif %}
+                            <span>{{file.filename}}</span>
+                        </div>
+                        <div class="file-details">{{file.page_count}} Pages | {{file.file_size}} | {{file.paper_color}}</div>
+                        <div class="file-action">
+                            
+                            <div class="view-btn" id="view-btn" data-file-id="{{file.file_no}}">
+                                <i class="fa-solid fa-eye"></i><span>View</span>
+                            </div>
+
+                            <div class="print-btn">
+                                <i class="fa-solid fa-print"></i><span>Print</span>
+                            </div>
+                            {% if file.file_permission == 'private' %}
+                                <i class="fa-solid fa-lock"></i>
+                            {% else %}
+                                <a href="{% url 'shop_download_file' file.file_no %}">
+                                <i class="fa-solid fa-download" id="download-file"></i>
+                                </a>
+                            {% endif %}
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </div>
+                    </div>
+                    {% endfor%} 
+                </div>
+
+            </div>
+
+            <div class="file-view-modal">
+                <div class="file-view-panel">
+                    <div class="file-view-header">
+                        <div class="file-view-name">
+                            <i class="fa-solid fa-file-word" id="file-word"></i>
+                            <i class="fa-solid fa-file-pdf" id="file-pdf"></i>
+                            <span id="view-file-filename">filename.pdf</span>
+                        </div>
+                        <div class="file-view-close" id="file-view-close-btn">Close</div>
+                    </div>
+                    <div class="file-view-pages-container">
+                        {% include 'partials/for_viewing_file.html' %}
+                    </div>
+                </div>
+            </div>
+                        
+        </div>
+
+            <form action="{% url 'shop_logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+            </form>
+    
+        
+        <script>
+            document.getElementById('payment-tab').addEventListener('click', function() {
+                document.getElementById('payment-link').click();
+            });
+
+            document.getElementById('claiming-tab').addEventListener('click', function() {
+                document.getElementById('claiming-link').click();
+            });
+
+            document.querySelectorAll('.view-btn').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    let file_no = this.getAttribute('data-file-id');
+                    let url = "{% url 'shop_view_file' 0 %}".replace('0', file_no);
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            document.querySelector('.file-view-pages-container').innerHTML = data.html;
+                            document.getElementById('view-file-filename').textContent = data.filename;
+                            document.querySelector('.file-view-modal').style.display = "flex";
+
+                            if(data.extension === '.pdf') {
+                                document.getElementById('file-pdf').style.display = "block";
+                            }else {
+                                document.getElementById('file-word').style.display = "block";
+                            }
+                            
+                        });
+
+                    
+                });
+            });
+
+            document.getElementById('file-view-close-btn').addEventListener('click', function() {
+                document.querySelector('.file-view-modal').style.display = "none";
+                document.getElementById('file-word').style.display = "none";
+                document.getElementById('file-pdf').style.display = "none";
+            });
+            
+
+        </script>
+
+    </body>
+</html>

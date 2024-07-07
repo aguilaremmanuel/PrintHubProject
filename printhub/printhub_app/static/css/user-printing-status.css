@@ -1,0 +1,41 @@
+.awaiting-for-printing-container,
+.now-printing-container,
+.for-claiming-container {
+    display: none;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.awaiting-for-printing-container i,
+.now-printing-container i,
+.for-claiming-container i{
+    font-size: 120px;
+}
+
+.awaiting-for-printing-container .fa-user-clock {
+    color: #FFF500;
+}
+
+.now-printing-container .fa-print {
+    color: #0B6DFF;
+}
+
+.for-claiming-container .fa-circle-check {
+    color: #00FF29;
+}
+
+.awaiting-for-printing-container p,
+.now-printing-container p,
+.for-claiming-container p {
+    font-style: italic;
+    font-size: 13px;
+}
+
+.first-message {
+    margin-top: 30px;
+}
+
+.last-message {
+    margin-top: 160px;
+}
+

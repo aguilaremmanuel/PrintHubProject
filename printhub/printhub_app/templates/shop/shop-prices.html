@@ -30,7 +30,13 @@
         <div class="main-panel">
 
             <div class="profile-container">
-                <span>Kween Leng Leng</span> <i class="fa-solid fa-circle-user"></i>
+                <span>Kween Leng Leng</span> <i class="fa-solid fa-circle-user" id="profileIcon"></i>
+                <div class="logout-container">
+                    <form action="{% url 'shop_logout' %}" method="post">
+                    {% csrf_token %}
+                        <button type="submit" class="logout-btn">Log out <span><i class="fa-solid fa-right-from-bracket"></i></span></button>
+                    </form>
+                </div>
             </div>
 
             <div class="prices-container">
@@ -198,6 +204,7 @@
     
     
         <script src="{% static 'js/shop-prices.js' %}"></script>
+        <script src="{% static 'js/shop-logout.js' %}"></script>
     
     </body>
 

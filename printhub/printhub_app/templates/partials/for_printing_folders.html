@@ -1,0 +1,11 @@
+{% for folder in user_folders_printing %}
+<div class="customer-instance-container" data-id="{{folder.user_folder_no}}">
+    <div class="no-container">{{ forloop.counter }}</div>
+        <div class="folder-instance-container" >
+            <i class="fa-solid fa-folder-open"></i>
+            <span class="customer-name-txt">{{folder.user.username}}</span>
+            <a href="{% url 'shop_mark_as_done' folder_name folder_no folder.user_folder_no %}"><div class="mark-as-done-btn">Mark as Done</div></a>
+            <div class="folder-action-container"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+        </div>
+</div>
+{% endfor %}

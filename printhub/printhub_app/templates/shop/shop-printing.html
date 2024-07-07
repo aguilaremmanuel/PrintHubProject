@@ -7,10 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="{% static 'css/generic-style.css' %}" rel="stylesheet">
         <link href="{% static 'css/shop-dashboard-style.css' %}" rel="stylesheet">
-        <link href="{% static 'css/shop-home-style.css' %}" rel="stylesheet">
         <link href="{% static 'css/payment-printing-claiming.css' %}" rel="stylesheet">
         <link href="{% static 'css/shop-printing.css' %}" rel="stylesheet">
-
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <title>PRINTING</title>
     </head>
@@ -20,7 +18,7 @@
             <img src="{% static 'images/logo.png' %}" alt="Company Logo">
 
             <div class="nav-links-container">
-                <a href="#" class="home-link link-hovered"><i class="fa-solid fa-house first-icon icon-hovered"></i> <span class="home-text link-text-hovered">Home</span></a>
+                <a href="{% url 'shop_dashboard' %}" class="home-link"><i class="fa-solid fa-house"></i> <span class="home-text">Home</span></a>
                 <a href="{% url 'shop_prices' %}"><i class="fa-solid fa-tag"></i><span>Prices</span></a>  
                 <a href="#"><i class="fa-solid fa-user-slash"></i><span>Restricted Users</span></a> 
                 <a href="#"><i class="fa-solid fa-money-check"></i><span>Subscriptions</span></a>
@@ -32,14 +30,21 @@
         <div class="main-panel">
 
             <div class="profile-container">
-                <span>Kween Leng Leng</span> <i class="fa-solid fa-circle-user"></i>
+                <span>Kween Leng Leng</span> <i class="fa-solid fa-circle-user" id="profileIcon"></i>
+                <div class="logout-container">
+                    <form action="{% url 'shop_logout' %}" method="post">
+                    {% csrf_token %}
+                        <button type="submit" class="logout-btn">Log out <span><i class="fa-solid fa-right-from-bracket"></i></span></button>
+                    </form>
+                </div>
             </div>
+
             <div class="tab-container">
                 <div class="payment-tab-container tab-instance" id="payment-tab">
                     <div class="payment-sub-container">
                         <i class="fa-solid fa-credit-card"></i> <span>PAYMENT</span>
                     </div>
-                    <a href="{% url 'shop_payment' %}" id="payment-link"></a>
+                    <a href="{% url 'shop_payment' folder_name folder_no%}" id="payment-link"></a>
                 </div>
                 <div class="printing-tab-container tab-instance current-tab">
                     <div class="printing-sub-background">
@@ -52,22 +57,48 @@
                             <i class="fa-solid fa-circle-check"></i><span>CLAIMING</span>
                         </div>
                     </div>
-                    <a href="{% url 'shop_claiming' %}" id="claiming-link"></a>
+                    <a href="{% url 'shop_claiming' folder_name folder_no %}" id="claiming-link"></a>
                 </div>
+                <div class="folder-name">{{folder_name}}</div>
             </div>
+
+
             <div class="folder-container">
-                
+
+                <div class="title-header-container">
+                    <div class="no">No.</div><div class="customer-name">Customer Name</div><div class="mark-as-done">Mark as Done</div><div class="icon-title"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                </div>
+
+                <div class="folder-printing-container" id="folder-printing-container">
+                    {% include 'partials/for_printing_folders.html' %}
+                </div>
+
             </div>
             
         </div>
 
-            <form action="{% url 'shop_logout' %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Logout</button>
-            </form>
-    
-        
         <script>
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const navLinks = document.querySelectorAll('.nav-links-container a');
+                const icons = document.querySelectorAll('.nav-links-container a i');
+                const linksText = document.querySelectorAll('.nav-links-container a span');
+
+                // Add hover effect to all links except the first one
+                for (let i = 0; i < navLinks.length; i++) {
+                    navLinks[i].addEventListener('mouseover', function() {
+                        navLinks[i].classList.add('link-hovered');
+                        icons[i].classList.add('icon-hovered');
+                        linksText[i].classList.add('link-text-hovered');
+                    });
+                    navLinks[i].addEventListener('mouseout', function() {
+                        navLinks[i].classList.remove('link-hovered');
+                        icons[i].classList.remove('icon-hovered');
+                        linksText[i].classList.remove('link-text-hovered');
+                    });
+                }
+            });
+
             document.getElementById('payment-tab').addEventListener('click', function() {
                 document.getElementById('payment-link').click();
             });
@@ -75,7 +106,43 @@
             document.getElementById('claiming-tab').addEventListener('click', function() {
                 document.getElementById('claiming-link').click();
             });
-        </script>
+            
+            function fetchUserFoldersPrinting() {
 
+                fetch("{% url 'update_folders_for_printing' folder_name folder_no %}")
+                        .then(response => response.json())
+                        .then(data => {
+                            document.getElementById('folder-printing-container').innerHTML = data.html;
+
+                            folderClickListener();
+
+                            document.querySelectorAll('.mark-as-done-btn').forEach(function(element) {
+                                element.addEventListener('click', function() {
+                                    console.log("btn");
+                                    event.stopPropagation();
+                                });
+                            });
+                        });
+                
+            }
+            
+            function folderClickListener() {
+                document.querySelectorAll('.folder-instance-container').forEach(function(element) {
+                    element.addEventListener('click', function() {
+                        let userFolderNo = this.closest('.customer-instance-container').getAttribute('data-id');
+                        let folderNo = "{{ folder_no }}";  // Replace with correct template variable
+                        let folderName = "{{ folder_name }}"; 
+                        let url = `/shop/dashboard/printing-files/${encodeURIComponent(folderName)}/${folderNo}/${userFolderNo}`;
+                        window.location.href = url;
+                    });
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                setInterval(fetchUserFoldersPrinting, 500);
+            });
+
+        </script>
+        <script src="{% static 'js/shop-logout.js' %}"></script>
     </body>
 </html>

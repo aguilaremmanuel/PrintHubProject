@@ -54,7 +54,7 @@
     background-color: #00FF29;
 }
 
-.upload-file-state.state.finished-state i{
+.state.finished-state i{
     color: white;
 }
 
@@ -116,7 +116,7 @@
     color: #0B6DFF;
 }
 
-.center-payment-container {
+.center-payment-container, .center-printing-status-container {
     display: flex;
     justify-content: center;
     height: 443px;
@@ -126,7 +126,7 @@
     margin-top: 20px;
 }
 
-.payment-container {
+.payment-container, .printing-status-container {
     display: block;
     background-color: #F6F8FE;
     height: 100%;
@@ -265,20 +265,6 @@
     margin-left: 15px;
 }
 
-.icon-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    background-color: #0B6DFF;
-    border-radius: 50%;
-}
-
-.icon-container i {
-    color: white;
-    font-weight: bold;
-}
-
 .status-icon-container {
     display: flex;
     justify-content: center;
@@ -287,12 +273,70 @@
 
 .status-icon-container i {
     font-size: 125px;
+}
+
+.status-icon-container .fa-clock {
     color: #FFF618;
 }
 
-.awainting-txt {
+.status-icon-container .fa-circle-check {
+    color: #00FF29;
+}
+
+.awaiting-txt {
     text-align: center;
     font-style: italic;
     font-size: 13px;
     margin-top: 30px;
 }
+
+.paid-payment-container, .awaiting-payment-container {
+    display: none;
+}
+
+.center-check-status-btn {
+    display: none;
+    justify-content: center;
+    padding: 0 50px;
+    margin-top: 20px;
+}
+
+.check-status-container {
+    display: flex;
+    justify-content: right;
+    width: 100%;
+    max-width: 500px;
+}
+
+.check-status-container a {
+    text-decoration: none;
+}
+
+.check-status-btn {
+    display: flex;
+    width: 155px;
+    height: 54px;
+    border-radius: 35px;
+    padding: 10px;
+    padding-left: 18px;
+    background-color: #DAE9FF;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.check-status-btn span {
+    font-size: 12px;
+    color: #0B6DFF;
+    font-weight: bold;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #0B6DFF;
+    border-radius: 50%;
+    color: white;
+}
+

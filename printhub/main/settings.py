@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'printhub_app',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,5 @@
+<div class="image-container">
+    {% for url in file_page_urls %}
+    <img src="{{ url }}" alt="Image {{forloop.counter}}">
+    {% endfor %}
+</div>

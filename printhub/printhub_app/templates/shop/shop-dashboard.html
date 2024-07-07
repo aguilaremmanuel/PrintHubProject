@@ -29,7 +29,13 @@
     <div class="main-panel">
 
         <div class="profile-container">
-            <span>Kween Leng Leng</span> <i class="fa-solid fa-circle-user"></i>
+            <span>Kween Leng Leng</span> <i class="fa-solid fa-circle-user" id="profileIcon"></i>
+            <div class="logout-container">
+                <form action="{% url 'shop_logout' %}" method="post">
+                {% csrf_token %}
+                    <button type="submit" class="logout-btn">Log out <span><i class="fa-solid fa-right-from-bracket"></i></span></button>
+                </form>
+            </div>
         </div>
 
         <div class="folder-container">
@@ -70,7 +76,7 @@
                     <div class="printing-container"><i class="fa-solid fa-users"></i><span>{{ folder_detail.for_printing }}</span></div>
                     <div class="claiming-container"><i class="fa-solid fa-users"></i><span>{{ folder_detail.for_claiming }}</span></div>
                     <div class="action-container ellipsis" ><i class="fa-solid fa-ellipsis-vertical"></i></div>
-                    <a href="{% url 'shop_payment' %}" id="payment-link"></a>
+                    <a href="{% url 'shop_payment' folder_detail.folder_name folder_detail.folder_no %}" id="payment-link"></a>
                 </div>
                 
             {% endfor %}
@@ -95,7 +101,6 @@
                 </script>
 
             {% endif %}
-            
       
             <!-- <div class="list-folders">
                 {#% for folder in folders %}
@@ -129,22 +134,13 @@
                         </div>
                     </div>
                 {#% endfor %}
-            </div>
-                -->
-            
+            </div> -->
         </div>
         
     </div>
 
-    
-        <form action="{% url 'shop_logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-        </form>
-    
-    
-
     <script src="{% static 'js/shop-dashboard.js' %}"></script>
+    <script src="{% static 'js/shop' %}"></script>
 
 </body>
 </html>

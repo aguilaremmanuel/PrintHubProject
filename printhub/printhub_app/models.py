@@ -123,6 +123,7 @@ class UserFolder(models.Model):
     time_upload = models.DateTimeField(null=True, blank=True)
     time_paid = models.DateTimeField(null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
     class Meta:
         db_table = 'user_folder'
@@ -136,6 +137,8 @@ class UserFile(models.Model):
     custom_page_size = models.CharField(max_length=10, null=True)
     file_type = models.CharField(max_length=10, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    actual_page_size = models.CharField(max_length=10, null=True, blank=True)
+    page_count = models.IntegerField(null=True, blank=True)
 
     class Meta:
         db_table = 'user_file'
