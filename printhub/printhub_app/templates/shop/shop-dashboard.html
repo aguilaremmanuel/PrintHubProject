@@ -20,7 +20,7 @@
             <a href="#" class="home-link link-hovered"><i class="fa-solid fa-house first-icon icon-hovered"></i> <span class="home-text link-text-hovered">Home</span></a>
             <a href="{% url 'shop_prices' %}"><i class="fa-solid fa-tag"></i><span>Prices</span></a>  
             <a href="#"><i class="fa-solid fa-user-slash"></i><span>Restricted Users</span></a> 
-            <a href="#"><i class="fa-solid fa-money-check"></i><span>Subscriptions</span></a>
+            <a href="{% url 'shop_subscription' %}"><i class="fa-solid fa-money-check"></i><span>Subscriptions</span></a>
             <a href="#"><i class="fa-solid fa-chart-pie"></i><span>Reports</span></a>
         </div>
 
@@ -29,7 +29,7 @@
     <div class="main-panel">
 
         <div class="profile-container">
-            <span>Kween Leng Leng</span> <i class="fa-solid fa-circle-user" id="profileIcon"></i>
+            <span>{{ shop_name }} ({{ shop_code }})</span> <i class="fa-solid fa-circle-user" id="profileIcon"></i>
             <div class="logout-container">
                 <form action="{% url 'shop_logout' %}" method="post">
                 {% csrf_token %}
@@ -53,7 +53,7 @@
                         
                         <div class="create-folder-action">
                             <div class="cancel-btn" id="cancel-btn"><p>Cancel</p></div>
-                            <button type="submit" class="crt-folder-btn">Create</button>
+                            <input type="submit" class="crt-folder-btn" value="Create">
                         </div>
                     </form>
                 </div>
@@ -140,7 +140,7 @@
     </div>
 
     <script src="{% static 'js/shop-dashboard.js' %}"></script>
-    <script src="{% static 'js/shop' %}"></script>
+    <script src="{% static 'js/shop-logout.js' %}"></script>
 
 </body>
 </html>

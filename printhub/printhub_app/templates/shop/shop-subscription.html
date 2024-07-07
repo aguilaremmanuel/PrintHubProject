@@ -1,0 +1,116 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'css/generic-style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/shop-dashboard-style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/shop-subscription.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <title>Shop Subscriptions</title>
+    </head>
+
+    <body>
+    
+        <div class="navigation">
+            <img src="{% static 'images/logo.png' %}" alt="Company Logo">
+    
+            <div class="nav-links-container">
+                <a href="{% url 'shop_dashboard' %}"><i class="fa-solid fa-house"></i> <span>Home</span></a>
+                <a href="{% url 'shop_prices' %}"><i class="fa-solid fa-tag"></i><span>Prices</span></a>  
+                <a href="#"><i class="fa-solid fa-user-slash"></i><span>Restricted Users</span></a> 
+                <a href="#" class="current-link link-hovered"><i class="fa-solid fa-money-check active-icon icon-hovered"></i><span class="price-text link-text-hovered">Subscriptions</span></a>
+                <a href="#"><i class="fa-solid fa-chart-pie"></i><span>Reports</span></a>
+            </div>
+    
+        </div>
+    
+        <div class="main-panel">
+
+            <div class="profile-container">
+                <span>{{ shop_name }} ({{ shop_code }})</span> <i class="fa-solid fa-circle-user" id="profileIcon"></i>
+                <div class="logout-container">
+                    <form action="{% url 'shop_logout' %}" method="post">
+                    {% csrf_token %}
+                        <button type="submit" class="logout-btn">Log out <span><i class="fa-solid fa-right-from-bracket"></i></span></button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="subscription-container">
+
+                <div class="details-container">
+                    <p>You are currently subscribe to <span class="txt-current-plan">QUARTERLY PLAN.</span></p>
+                    <p><span class="txt-plan-date">Plan Started: </span>July 07, 2024</p>
+                    <p><span class="txt-plan-date">Plan Ends At: </span>November 07, 2024</p>
+                </div>
+
+                <div class="plans-container">
+                    <div class="monthly-plan-container">
+                        <div class="img-container"> <img src="/static/images/monthly.png" alt="monthly plan image"> </div>
+                        <div class="txt-plan-title">Monthly Plan</div>
+                        <div class="txt-price">₱ 1,500</div>
+                        <div class="txt-plan-description"><p>Ideal for businesses with regular printing needs, providing cost-effective solutions and consistent service on a monthly basis.</p></div>
+                        <div class="plan-btn-container"><div class="get-plan-btn">Buy Monthly Plan</div></div>
+                    </div>
+                    <div class="quarterly-plan-container">
+                        <div class="img-container"> <img src="/static/images/quarterly.png" alt="quarterly plan image"> </div>
+                        <div class="txt-plan-title">Quarterly Plan</div>
+                        <div class="txt-price">₱ 5,500</div>
+                        <div class="txt-plan-description"><p>Great for businesses looking to balance flexibility and cost savings, offering reliable printing services every three months.</p></div>
+                        <div class="plan-btn-container"><div class="get-plan-btn">Buy Quarterly Plan</div></div>
+                    </div>
+                    <div class="yearly-plan-container">
+                        <div class="img-container"> <img src="/static/images/yearly.png" alt="yearly plan image"> </div>
+                        <div class="txt-plan-title">Yearly Plan</div>
+                        <div class="txt-price">₱ 12,500</div>
+                        <div class="txt-plan-description"><p>Best for long-term planning and budgeting, ensuring stable and reliable printing services throughout the year with added savings.</p></div>
+                        <div class="plan-btn-container"><div class="get-plan-btn">Buy Yearly Plan</div></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-links-container a');
+            const currentLink = document.querySelector('.current-link');
+            const icons = document.querySelectorAll('.nav-links-container a i');
+            const activeIcon = document.querySelector('.active-icon');
+            const priceText = document.querySelector('.price-text');
+            const linksText = document.querySelectorAll('.nav-links-container a span');
+
+            // Add hover effect to all links except the first one
+            for (let i = 0; i < navLinks.length; i++) {
+
+                if(i == 3) {
+                    continue;
+                }
+
+                navLinks[i].addEventListener('mouseover', function() {
+                    currentLink.classList.remove('link-hovered');
+                    navLinks[i].classList.add('link-hovered');
+                    activeIcon.classList.remove('icon-hovered');
+                    icons[i].classList.add('icon-hovered');
+                    priceText.classList.remove('link-text-hovered');
+                    linksText[i].classList.add('link-text-hovered');
+                });
+                navLinks[i].addEventListener('mouseout', function() {
+                    currentLink.classList.add('link-hovered');
+                    navLinks[i].classList.remove('link-hovered');
+                    activeIcon.classList.add('icon-hovered');
+                    icons[i].classList.remove('icon-hovered');
+                    priceText.classList.add('link-text-hovered');
+                    linksText[i].classList.remove('link-text-hovered');
+                });
+            }
+        });
+        </script>
+        <script src="{% static 'js/shop-logout.js' %}"></script>
+    
+    </body>
+
+</html>

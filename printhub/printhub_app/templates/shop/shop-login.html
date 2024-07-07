@@ -16,7 +16,9 @@
 <body>
     <div class="input-area">
         <div class="logo-container">
-            <img class="logo mt-2" src="{% static 'images/logo.png' %}">
+            <a href="{% url 'main_page' %}">
+                <img class="logo mt-2" src="{% static 'images/logo.png' %}">
+            </a>
         </div>
         <div class="text-container">
             <form method="post" action="{% url 'shop_login' %}">

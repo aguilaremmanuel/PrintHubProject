@@ -1,0 +1,177 @@
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'css/bootstrap5.css' %}" rel="stylesheet">
+        <link href="{% static 'css/main-page-style.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <title>PrintHub — About</title>
+    </head>
+
+    <body>
+        {% include 'asset-navbar.html' %}        
+
+        <section class="about">
+            <div class="container py-5">
+                <div class="row">
+                    <h1 class="text-page-heading text-accent mt-5 mb-3">Get to Know <span class="text-light">Our Story and Purpose</span></h1>
+                    <p class="text-light pb-5">Explore PrintHub's background, mission, vision, and meet the team driving our innovative solutions.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-2">
+            <div class="container py-4">
+                <div class="row my-3">
+                    <div class="col-12 col-lg-6 my-5 pe-xl-5 pe-lg-4">
+                        <img src="/static/images/about.png" class="img-fluid" alt="PrintHub Image">
+                    </div>
+                    <div class="col-12 col-lg-6 pe-xl-5 py-5 pt-xl-5 pt-lg-4 pt-md-0 pt-sm-0">
+                        <h1 class="text-heading text-accent mb-3 mt-xl-2">What is <span class="text-dark">PrintHub?</span></h1>
+                        <p class="text-dark mb-3">PrintHub is a comprehensive, web-based platform designed to streamline print shop operations, 
+                        enhance customer engagement, and boost business efficiency. With advanced technology and user-friendly interfaces, 
+                        PrintHub empowers local printers to efficiently manage orders, track inventory, and deliver products 
+                        swiftly and accurately.</p>
+                        <p class="text-dark mb-3">Recognizing the unique challenges faced by local printing businesses, our platform offers advanced 
+                            print management system designed to optimize their workflow and operations. Discover how PrintHub can revolutionize 
+                            your printing business and elevate your operational capabilities today!</p>
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <h1 class="text-heading text-dark text-center mb-3">Our Commitment to <span class="text-accent">Sustainable Development</span></h1>
+                    <p class="text-center text-dark mb-2 px-5">At PrintHub, we're transforming the local printing industry while advancing the United
+                    Nations Sustainable Development Goals (SDGs).</p>
+                </div>
+                <div class="row my-5">
+                    <div class="col-12 col-sm-6">
+                        <div class="card card-style mb-4" style="max-width: auto;">
+                            <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/static/images/sdg-4.png" class="img-fluid" alt="SDG 4">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                <h4 class="card-title text-heading text-dark my-2">The Print4Education Initiative</h4>
+                                <p class="card-subtitle mb-2 text-subheading">QUALITY EDUCATION</p>
+                                <p class="card-text mt-3">Providing free educational materials, design workshops, and scholarships for design and technology related courses.</p>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="card card-style mb-4" style="max-width: auto;">
+                            <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/static/images/sdg-11.png" class="img-fluid" alt="SDG 11">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                <h4 class="card-title text-heading text-dark my-2">Community Print Centers</h4>
+                                <p class="card-subtitle mb-2 text-subheading">SUSTAINABLE CITIES & COMMUNITIES</p>
+                                <p class="card-text mt-3">Establishing affordable print hubs in underserved areas and fostering community collaboration to meet local needs.</p>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="card card-style mb-4" style="max-width: auto;">
+                            <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/static/images/sdg-8.png" class="img-fluid" alt="SDG 8">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                <h4 class="card-title text-heading text-dark my-2">Local Print Shops Accelerator</h4>
+                                <p class="card-subtitle mb-2 text-subheading">DECENT WORK & ECONOMIC GROWTH</p>
+                                <p class="card-text mt-3">Offering mentorship, training programs, and micro-loans to empower local printing startups and enhance skills for industry employees.</p>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="card card-style mb-4" style="max-width: auto;">
+                            <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/static/images/sdg-12.png" class="img-fluid" alt="SDG 12">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                <h4 class="card-title text-heading text-dark my-2">Print Sustainablity Pledge</h4>
+                                <p class="card-subtitle mb-2 text-subheading">RESPONSIBLE CONSUMPTION & PRODUCTION</p>
+                                <p class="card-text mt-3">Committing to environmentally responsible practices across our operations and advocating for sustainable practices.</p>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-3">
+            <div class="container py-4">
+                <div class="row my-5 pt-1 gx-5">
+                    <div class="col-12 col-lg-1"></div>
+                    <div class="col-12 col-lg-5 pb-3">
+                        <h1 class="card-title text-heading text-accent text-center pb-3">Our Mission</h1>
+                        <div class="card" style="width: auto;">
+                            <div class="card-body p-4">
+                              <p class="card-text text-light text-center">To revolutionize the printing industry by providing innovative, 
+                                reliable, and user-friendly online printing solutions. We aim to empower businesses and individuals with the tools 
+                                they need to manage their printing needs efficiently and affordably.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5 pb-3">                              
+                        <h1 class="card-title text-heading text-accent text-center pb-3">Our Vision</h1>
+                        <div class="card" style="width: auto;">
+                            <div class="card-body p-4">
+                              <p class="card-text text-light text-center">To become the leading provider of online printing solutions, known for
+                                our commitment to quality, customer satisfaction, and innovation. We strive to create an effortless 
+                                printing experience for our customers through advanced technology and dedicated service.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-1"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-4">
+            <div class="container py-4">
+                <div class="row my-3">
+                    <div class="col-12 col-lg-4 pe-xl-3 py-5 pt-xl-5 pt-lg-4 pt-md-0 pt-sm-0">
+                        <h1 class="text-heading text-accent mb-3 mt-xl-2">Meet Our<span class="text-dark"><br>Core Team</span></h1>
+                        <p class="text-dark mb-3">	PrintHub is established as a partnership among four founders, each contributing unique expertise
+                            to the business. These innovative student professionals are dedicated to transforming the landscape for small print shops 
+                            through a print management system.</p>
+                    </div>
+                    <div class="col-12 col-lg-2 pb-0 my-5">
+                        <img src="/static/images/emman-img.png" class="img-fluid" alt="PrintHub Image">
+                    </div>
+                    <div class="col-12 col-lg-2 pb-0 my-5">
+                        <img src="/static/images/khyle-img.png" class="img-fluid" alt="PrintHub Image">
+                    </div>
+                    <div class="col-12 col-lg-2 pb-0 my-5">
+                        <img src="/static/images/franzel-img.png" class="img-fluid" alt="PrintHub Image">
+                    </div>
+                    <div class="col-12 col-lg-2 pb-0 my-5">
+                        <img src="/static/images/tina-img.png" class="img-fluid" alt="PrintHub Image">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="footer-div"></section>
+
+        {% include 'asset-footer.html' %}        
+    </body>
+</html>

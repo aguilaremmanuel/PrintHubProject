@@ -185,3 +185,13 @@ table td:nth-child(5) {
 .customer-instance a {
     text-decoration: none;
 }
+
+#userActionBtn {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+#userActionBtn:hover {
+    background-color: rgb(242, 234, 234);
+}

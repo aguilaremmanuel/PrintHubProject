@@ -2,7 +2,12 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.main_page, name='main_page'),                               # Main page URL
+    path('', views.main_page, name='main_page'),                            # Main page URL
+    path('about/',views.about_page, name='about_page'),                     # About
+    path('pricing/',views.pricing_page, name='pricing_page'),               # Pricing
+    path('contact/',views.contact_page, name='contact_page'),               # Contact
+
+    path('faqs/',views.faqs_page, name='faqs_page'),                        # FAQs
     path('shop/signup/', views.shop_signup, name='shop_signup'),            # shop signup page
     path("shop/login/", views.shop_login, name='shop_login'),               # shop login page
     path("shops/logout/", views.shop_logout, name='shop_logout'),           # shop logout
@@ -21,7 +26,7 @@ urlpatterns = [
     path('shop/dashboard/printing/view-file/<int:file_no>/', views.shop_view_file, name='shop_view_file'),
     path('shop/dashboard/download-file/<int:file_no>/', views.shop_download_file, name='shop_download_file'),
     path('shop/dashboard/mark-as-claimed/<str:folder_name>/<int:folder_no>/<int:user_folder_no>/', views.shop_mark_as_claimed, name='shop_mark_as_claimed'),
-
+    path('shop/dashboard/subscriptions/', views.shop_subscription, name='shop_subscription'),
 
     path('user/signup/', views.user_signup, name='user_signup'),            # user signup page
     path('user/login/', views.user_login, name='user_login'),               # user login page

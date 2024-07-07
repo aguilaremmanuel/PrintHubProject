@@ -21,7 +21,7 @@
                 <a href="{% url 'shop_dashboard' %}"><i class="fa-solid fa-house"></i> <span>Home</span></a>
                 <a href="{% url 'shop_prices' %}" class="current-link link-hovered"><i class="fa-solid fa-tag active-icon icon-hovered"></i><span class="price-text link-text-hovered">Prices</span></a>  
                 <a href="#"><i class="fa-solid fa-user-slash"></i><span>Restricted Users</span></a> 
-                <a href="#"><i class="fa-solid fa-money-check"></i><span>Subscriptions</span></a>
+                <a href="{% url 'shop_subscription' %}"><i class="fa-solid fa-money-check"></i><span>Subscriptions</span></a>
                 <a href="#"><i class="fa-solid fa-chart-pie"></i><span>Reports</span></a>
             </div>
     
@@ -30,7 +30,7 @@
         <div class="main-panel">
 
             <div class="profile-container">
-                <span>Kween Leng Leng</span> <i class="fa-solid fa-circle-user" id="profileIcon"></i>
+                <span>{{ shop_name }} ({{ shop_code }})</span> <i class="fa-solid fa-circle-user" id="profileIcon"></i>
                 <div class="logout-container">
                     <form action="{% url 'shop_logout' %}" method="post">
                     {% csrf_token %}

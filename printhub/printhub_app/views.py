@@ -26,19 +26,39 @@ from django.template.loader import render_to_string
 from django.db.models import Q
 import shutil
 
+def faqs_page (request):
+    return render(request, 'faqs.html')
+
+def contact_page (request):
+    return render(request, 'contact.html')
+
+def pricing_page (request):
+    return render(request, 'pricing.html')
+
 def main_page (request):
     return render(request, 'main-page.html')
+
+def about_page (request):
+    return render(request, 'about.html')
 
 def shop_dashboard(request):
     shop_id = request.session.get('shop_id')
     if shop_id:
 
+        context = {}
+
         folder_details = []
 
         folders = ShopFolder.objects.filter(folder_id=shop_id) 
         
-        hasNoShopRate = request.session.get('raise_no_shop_rate')
+        shop_name = folders[0].folder_id.shop_name
+        shop_code = folders[0].folder_id_id
 
+        context['shop_name'] = shop_name
+        context['shop_code'] = shop_code
+        
+        hasNoShopRate = request.session.get('raise_no_shop_rate')
+        
         for folder in folders:
 
             for_payment = 0
@@ -66,11 +86,14 @@ def shop_dashboard(request):
 
             folder_details.append(folder_detail)
 
+        context['folder_details'] = folder_details
+
         if hasNoShopRate:
             del request.session['raise_no_shop_rate']
-            return render(request, 'shop/shop-dashboard.html', {'folder_details': folder_details, 'raiseNoShopRate': True})
+            context['raiseNoShopRate'] = True
+            return render(request, 'shop/shop-dashboard.html', context)
         
-        return render(request, 'shop/shop-dashboard.html', {'folder_details': folder_details})
+        return render(request, 'shop/shop-dashboard.html', context)
     return redirect('shop_login')  
 
 def shop_login(request):
@@ -160,6 +183,8 @@ def shop_prices(request):
     except Shop.DoesNotExist:
         messages.error(request, 'Shop not found.')
 
+    context = {}
+
     shop_rate = shop.shop_rate_set.first()
 
     paper_rates = {
@@ -180,7 +205,11 @@ def shop_prices(request):
             'long_bw': shop_rate.long_bw,
     }
 
-    return render(request, 'shop/shop-prices.html', {'paper_rates': paper_rates})
+    context['shop_name'] = shop.shop_name
+    context['shop_code'] = shop.shop_id
+    context['paper_rates'] = paper_rates
+
+    return render(request, 'shop/shop-prices.html', context)
 
 def shop_edit_price(request):
     shop_id = request.session.get('shop_id')
@@ -199,10 +228,15 @@ def shop_edit_price(request):
 
 def shop_payment(request, folder_name, folder_no):
 
+
     context = {
         'folder_name' : folder_name,
         'folder_no' : folder_no,
     }
+
+    shop_folder = ShopFolder.objects.get(folder_no = folder_no)
+    context['shop_name'] = shop_folder.folder_id.shop_name
+    context['shop_code'] = shop_folder.folder_id_id
 
     return render(request, 'shop/shop-payment.html', context)
 
@@ -241,6 +275,10 @@ def shop_printing(request, folder_name, folder_no):
         'folder_name': folder_name,
         'folder_no': folder_no,
     }
+
+    shop_folder = ShopFolder.objects.get(folder_no = folder_no)
+    context['shop_name'] = shop_folder.folder_id.shop_name
+    context['shop_code'] = shop_folder.folder_id_id
     return render(request, 'shop/shop-printing.html', context)
 
 def shop_mark_as_done(request, folder_name, folder_no, user_folder_no):
@@ -363,6 +401,10 @@ def shop_claiming(request, folder_name, folder_no):
         'folder_no': folder_no
     }
 
+    shop_folder = ShopFolder.objects.get(folder_no = folder_no)
+    context['shop_name'] = shop_folder.folder_id.shop_name
+    context['shop_code'] = shop_folder.folder_id_id
+
     return render(request, 'shop/shop-claiming.html', context)
 
 def shop_mark_as_claimed(request, folder_name, folder_no, user_folder_no):
@@ -381,6 +423,22 @@ def shop_mark_as_claimed(request, folder_name, folder_no, user_folder_no):
         shutil.rmtree(user_folder_path)
 
     return redirect('shop_claiming', folder_name=folder_name, folder_no=folder_no)
+
+def shop_subscription(request):
+    shop_id = request.session.get('shop_id')
+
+    if shop_id:
+
+        context = {}
+
+        shop = Shop.objects.get(shop_id = shop_id)
+        context['shop_name'] = shop.shop_name
+        context['shop_code'] = shop.shop_id
+
+        return render(request, 'shop/shop-subscription.html', context)
+
+
+    return redirect('shop_login')
 
 def shop_logout(request):
     if 'shop_id' in request.session:
@@ -526,6 +584,7 @@ def user_upload_file(request):
             
         except UserFolder.DoesNotExist:
             user_folder = UserFolder.objects.create(folder_parent=shop_folder, user=user) # gumawa ng bagong folder if wala pa folder kay shop
+        #file_parent = user_folder.user_folder_no
 
         request.session['file_parent'] = user_folder.user_folder_no 
         

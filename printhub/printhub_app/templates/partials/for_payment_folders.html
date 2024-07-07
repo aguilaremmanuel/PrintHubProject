@@ -4,6 +4,6 @@
     <div class="name"><i class="fa-solid fa-user"></i><span>{{folder.user.username}}</span></div>
     <div class="price">{{folder.total_price}}</div>
     <div class="paid"><a href="{% url 'shop_customer_paid' folder_name folder_no folder.user_folder_no  %}" class="paid-link" id="paid-link"><div class="paid-btn" id="paid-btn" data-folder-id="{{ folder.id }}">Paid</div></a></div>
-    <div class="icon"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+    <div class="icon"><i class="fa-solid fa-ellipsis-vertical" id="userActionBtn"></i></div>
 </div>
 {% endfor %}

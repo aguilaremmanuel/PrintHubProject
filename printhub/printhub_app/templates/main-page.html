@@ -1,21 +1,209 @@
 {% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static 'css/main-page-style.css' %}" rel="stylesheet">
-    <title>PrintHub</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% bootstrap_css %}
+        <link href="{% static 'css/main-page-style.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <title>PrintHub</title>
+    </head>
     
-    <div class="main-container">
-        <a href="{% url 'shop_login' %}">Login as Shop</a>
-        <a href="{% url 'shop_signup' %}">Sign Up as Shop</a>
-        <a href="{% url 'user_login' %}">Login as User</a>
-        <a href="{% url 'user_signup' %}">Sign Up as User</a>
-    </div>
+    <body>
+        {% include 'asset-navbar.html' %}        
+        
+        <section class="home">
+            <div class="container py-5">
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <p class="text-bold text-accent mt-5">PRINTHUB: PRINT MANAGEMENT SYSTEM</p>
+                        <h1 class="text-heading text-light my-4">Your Reliable Printing Partner</h1>
+                        <p class="text-light mb-4">Revolutionize your printing business with PrintHub. Seamlessly connect with your customers, 
+                        efficiently manage your printing data, and streamline your operations — all on one powerful platform!</p>
+                        <a href="{% url 'pricing_page'%}"><button class="btn-accent text-light mt-2">Get Started Now</button></a>
+                    </div>
+                    <div class="col-12 col-lg-6"></div>
+                </div>
+            </div>
+        </section>
 
-</body>
+        <section class="home-2">
+            <div class="container py-4">
+                <div class="row my-3">
+                    <div class="col-12 col-lg-5 my-5 pe-xl-5 pe-lg-4">
+                        <img src="/static/images/about.png" class="img-fluid" alt="PrintHub Image">
+                    </div>
+                    <div class="col-12 col-lg-7 pe-xl-5 py-5 pt-xl-5 pt-lg-4 pt-md-0 pt-sm-0">
+                        <h1 class="text-heading text-accent mb-3 mt-xl-2">What is <span class="text-dark">PrintHub?</span></h1>
+                        <p class="text-dark mb-3">PrintHub is a comprehensive, web-based platform designed to streamline print shop operations, 
+                        enhance customer engagement, and boost business efficiency. With advanced technology and user-friendly interfaces, 
+                        PrintHub empowers local printers to efficiently manage orders, track inventory, and deliver products 
+                        swiftly and accurately.</p>
+                        <p class="text-dark mb-4">Discover how PrintHub can revolutionize your printing business and elevate your operational capabilities today!</p>
+                        <a href="{% url 'about_page'%}"><button class="btn-hollow">Learn More</button></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="home-3">
+            <div class="container py-lg-5 py-md-4 py-sm-4">
+                <div class="row my-5">
+                    <div class="col-12 col-lg-7 ps-lg-4">
+                        <h1 class="text-heading text-light">Powerful solution that <br>revolutionalizes 
+                        services of <br>small local printing businesses.</h1>
+                    </div>
+                    <div class="today col-12 col-lg-5 px-lg-5 py-lg-4 py-4">
+                        <p class="text-light">In today's fast-paced digital age, small printing businesses often face significant challenges in 
+                        staying competitive and meeting the evolving demands of their customers. PrintHub is here to transform that landscape.
+                        We're here to help your printing business stay ahead of the curve. Join us now!</p>
+                    </div>    
+                </div>
+            </div>
+        </section>
+
+        <section class="home-4">
+            <div class="container py-4">
+                <div class="row mt-5">
+                    <h1 class="text-heading text-dark mb-3">Our Commitment to <span class="text-accent">Sustainable Development</span></h1>
+                    <p class="text-center text-dark mb-2 px-5">At PrintHub, we're transforming the local printing industry while advancing the United
+                    Nations Sustainable Development Goals (SDGs).</p>
+                </div>
+                <div class="row my-5">
+                    <div class="col-12 col-sm-6">
+                        <div class="card card-style mb-4" style="max-width: auto;">
+                            <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/static/images/sdg-4.png" class="img-fluid" alt="SDG 4">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                <h4 class="card-title text-heading text-dark my-2">The Print4Education Initiative</h4>
+                                <p class="card-subtitle mb-2 text-subheading">QUALITY EDUCATION</p>
+                                <p class="card-text mt-3">Providing free educational materials, design workshops, and scholarships for design and technology related courses.</p>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="card card-style mb-4" style="max-width: auto;">
+                            <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/static/images/sdg-11.png" class="img-fluid" alt="SDG 11">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                <h4 class="card-title text-heading text-dark my-2">Community Print Centers</h4>
+                                <p class="card-subtitle mb-2 text-subheading">SUSTAINABLE CITIES & COMMUNITIES</p>
+                                <p class="card-text mt-3">Establishing affordable print hubs in underserved areas and fostering community collaboration to meet local needs.</p>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="card card-style mb-4" style="max-width: auto;">
+                            <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/static/images/sdg-8.png" class="img-fluid" alt="SDG 8">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                <h4 class="card-title text-heading text-dark my-2">Local Print Shops Accelerator</h4>
+                                <p class="card-subtitle mb-2 text-subheading">DECENT WORK & ECONOMIC GROWTH</p>
+                                <p class="card-text mt-3">Offering mentorship, training programs, and micro-loans to empower local printing startups and enhance skills for industry employees.</p>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="card card-style mb-4" style="max-width: auto;">
+                            <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/static/images/sdg-12.png" class="img-fluid" alt="SDG 12">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                <h4 class="card-title text-heading text-dark my-2">Print Sustainablity Pledge</h4>
+                                <p class="card-subtitle mb-2 text-subheading">RESPONSIBLE CONSUMPTION & PRODUCTION</p>
+                                <p class="card-text mt-3">Committing to environmentally responsible practices across our operations and advocating for sustainable practices.</p>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row my-5">
+                    <h1 class="text-heading text-accent mb-3">Have Questions?<span class="text-dark"> Ask Us Anything!</span></h1>
+                    <p class="text-center text-dark mb-3 px-5">Find answers to the most common queries about PrintHub through our FAQs or reach out to
+                        us via email.</p>
+                    <div class="col-12 col-xl-2"></div>
+                    <div class="col-12 col-xl-8">
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                <button class="accordion-button collapsed text-dark text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                  What is PrintHub?
+                                </button>
+                              </h2>
+                              <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body text-dark"><p>PrintHub is a comprehensive, web-based platform designed to streamline print shop operations,
+                                    enhance customer engagement, and boost business efficiency. With advanced technology and user-friendly interfaces, 
+                                    PrintHub empowers local printers to efficiently manage orders, track inventory, and deliver products swiftly and 
+                                    accurately.</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                <button class="accordion-button collapsed text-dark text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                  How does PrintHub: Print Management System work?
+                                </button>
+                              </h2>
+                              <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body text-dark"><p>PrintHub operates through two main portals: the shop portal and the user portal, designed to 
+                                    streamline the printing process for businesses and their customers. The shop portal serves as the backend management 
+                                    system where print shops can efficiently manage incoming orders. It provides tools for shop owners or administrators
+                                    to oversee production schedules, manage inventory, and optimize workflow efficiency.<br><br>
+                                    On the other hand, the user portal provides a user-friendly interface for customers to conveniently place and manage 
+                                    their print orders. Through the user portal, customers can easily upload their files, specify printing preferences 
+                                    such as paper type, size, and quantity, and instantly receiv a price quote based on their selections. This 
+                                    streamlined process allows customers to make informed decisions before finalizing their orders, ensuring transparency 
+                                    and satisfaction throughout the printing experience.</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                <button class="accordion-button collapsed text-dark text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                    Is PrintHub suitable for my business?
+                                </button>
+                              </h2>
+                              <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body text-dark"><p>If you are a printing business looking to streamline your operations, manage orders more efficiently, and enhance 
+                                    customer interaction, PrintHub is designed with your needs in mind. Our platform offers robust tools for managing 
+                                    print jobs, tracking orders, and optimizing workflow, making it ideal for print shops.</p>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-2"></div>
+                    <div class="my-3 d-flex justify-content-center">
+                        <a href="{% url 'faqs_page'%}"><button class="btn-hollow">Learn More</button></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="footer-div"></section>
+
+        {% include 'asset-footer.html' %}
+    </body>
 </html>

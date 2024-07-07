@@ -49,12 +49,33 @@ class ShopSignupForm(forms.ModelForm):
         return cleaned_data
 
 class UserSignupForm(forms.ModelForm):
-    confirm_password = forms.CharField(widget=forms.PasswordInput())
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'id': 'confirm_password',
+            'placeholder': 'Confirm Password'
+        })
+    )
+
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
         widgets = {
-            'password': forms.PasswordInput(),
+            'username': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'username',
+                'placeholder': 'Enter Username'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'id': 'email',
+                'placeholder': 'Enter Email'
+            }),
+            'password': forms.PasswordInput(attrs={
+                'class': 'form-control',
+                'id': 'password',
+                'placeholder': 'Enter Password'
+            }),
         }
 
     def clean(self):
